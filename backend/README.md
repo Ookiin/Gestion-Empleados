@@ -4,8 +4,6 @@
 
 Este backend está diseñado para gestionar empleados, sus posiciones y usuarios asociados. Está basado en Node.js con Express y MongoDB como base de datos. Utiliza JWT para la autenticación y bcrypt para la encriptación de contraseñas. La API sigue el patrón RESTful y proporciona funcionalidades para CRUD (crear, leer, actualizar y eliminar) de empleados.
 
-/////////////////////////////////////////////////////////////////////////////////////
-
 ## Tecnologías Utilizadas
 
 Node.js: Entorno de ejecución para JavaScript en el servidor.
@@ -15,8 +13,6 @@ Mongoose: ORM para interactuar con MongoDB.
 JWT (JSON Web Token): Para la autenticación y autorización de los usuarios.
 BcryptJS: Para la encriptación de contraseñas de los usuarios.
 Passport: Middleware de autenticación.
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 ## Estructura del Proyecto
 
@@ -43,8 +39,6 @@ Passport: Middleware de autenticación.
         │ ├── generateToken.js
         │
         └── server.js
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 ## Descripción de las Carpetas y Archivos
 
@@ -78,8 +72,6 @@ utils/: Funciones auxiliares reutilizables.
 
 server.js: Archivo principal que inicia el servidor Express y configura la API.
 
-/////////////////////////////////////////////////////////////////////////////////////
-
 ### Middleware
 
 El middleware utilizado en este backend incluye la verificación del token JWT para autenticar las solicitudes.
@@ -98,8 +90,6 @@ router.post("/login", loginUser);
 router.post("/logout", protect, logoutUser);
 
 router.post("/forgot-password", protect, requestPasswordReset);
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 ## Rutas (Endpoints)
 
@@ -127,8 +117,6 @@ Descripción: Actualiza la información de un empleado (por ejemplo, su puesto d
    Método: DELETE
 
 Descripción: Elimina un empleado del sistema. Requiere autenticación.
-
-/////////////////////////////////////////////////////////////////////////////////////
 
 # Conclusión
 
