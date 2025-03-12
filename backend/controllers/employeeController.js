@@ -85,8 +85,6 @@ export async function createEmployee(req, res) {
 }
 
 export async function updateEmployee(req, res) {
-  console.log("ID en params:", req.params.id);
-
   try {
     const { firstName, position } = req.body;
 
@@ -97,7 +95,6 @@ export async function updateEmployee(req, res) {
     }
 
     const employee = await Employee.findOne({ user: req.params.id });
-    console.log("employee", employee);
 
     if (!employee) {
       return res.status(404).json({ message: "Empleado no encontrado" });
