@@ -79,7 +79,9 @@ La ruta de Login no utiliza protect porque obviamente no tiene token al no haber
 Ahora para recuperar contraseña o cerrar sesion se requiere el protect
 
 router.post("/login", loginUser);
+
 router.post("/logout", protect, logoutUser);
+
 router.post("/forgot-password", protect, requestPasswordReset);
 
 /////////////////////////////////////////////////////////////////////////////////////
