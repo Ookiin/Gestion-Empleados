@@ -49,19 +49,33 @@ Estructura del Proyecto
 Descripción de las Carpetas y Archivos
 
 config/: Contiene la configuración de la base de datos, como la conexión con MongoDB.
+
 controllers/: Almacena la lógica de controladores para manejar las solicitudes HTTP.
+
 ├── authController.js: Controlador encargado de la autenticación y generación de tokens JWT.
+
 └── employeeController.js: Controlador que maneja la lógica de los empleados.
+
 middleware/: Contiene middlewares que se ejecutan antes de las solicitudes para protección y validaciones.
+
 └── authMiddleware.js: Middleware que protege rutas verificando el token JWT.
+
 models/: Define los esquemas de la base de datos usando Mongoose.
+
 ├── Employee.js: Modelo de empleados.
+
 └── User.js: Modelo de usuarios.
+
 routes/: Contiene los archivos donde se definen las rutas de la API.
+
 ├── authRoutes.js: Rutas relacionadas con la autenticación de usuarios.
+
 └── employeeRoutes.js: Rutas para la gestión de empleados.
+
 utils/: Funciones auxiliares reutilizables.
+
 └── generateToken.js: Función para generar tokens JWT para autenticación.
+
 server.js: Archivo principal que inicia el servidor Express y configura la API.
 
 /////////////////////////////////////////////////////////////////////////////////////
