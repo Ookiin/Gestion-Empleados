@@ -2,7 +2,6 @@ import express, { json } from "express";
 import { config } from "dotenv";
 import connectDB from "./config/db.js";
 import cors from "cors";
-import bodyParser from "body-parser";
 import authRoutes from "./routes/authRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 
