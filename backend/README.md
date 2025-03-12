@@ -1,12 +1,12 @@
-Documentación del Backend
+# Documentación del Backend
 
-Introducción
+## Introducción
 
 Este backend está diseñado para gestionar empleados, sus posiciones y usuarios asociados. Está basado en Node.js con Express y MongoDB como base de datos. Utiliza JWT para la autenticación y bcrypt para la encriptación de contraseñas. La API sigue el patrón RESTful y proporciona funcionalidades para CRUD (crear, leer, actualizar y eliminar) de empleados.
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 Node.js: Entorno de ejecución para JavaScript en el servidor.
 Express: Framework web minimalista para Node.js.
@@ -18,7 +18,7 @@ Passport: Middleware de autenticación.
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-Estructura del Proyecto
+## Estructura del Proyecto
 
         backend/
         ├── config/
@@ -46,7 +46,7 @@ Estructura del Proyecto
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-Descripción de las Carpetas y Archivos
+## Descripción de las Carpetas y Archivos
 
 config/: Contiene la configuración de la base de datos, como la conexión con MongoDB.
 
@@ -80,7 +80,8 @@ server.js: Archivo principal que inicia el servidor Express y configura la API.
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-Middleware
+### Middleware
+
 El middleware utilizado en este backend incluye la verificación del token JWT para autenticar las solicitudes.
 
 authMiddleware.js
@@ -100,7 +101,7 @@ router.post("/forgot-password", protect, requestPasswordReset);
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-Rutas (Endpoints)
+## Rutas (Endpoints)
 
 1. POST /api/auth/login
    Método: POST
@@ -129,6 +130,6 @@ Descripción: Elimina un empleado del sistema. Requiere autenticación.
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-Conclusión
+# Conclusión
 
 Este backend proporciona un sistema de autenticación y autorización mediante JWT, además de una gestión de empleados y usuarios asociada a MongoDB. Las rutas están protegidas por middleware de autenticación, asegurando que solo los usuarios válidos puedan acceder a los recursos.
