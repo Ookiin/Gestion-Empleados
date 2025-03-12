@@ -8,11 +8,11 @@ Este backend está diseñado para gestionar empleados, sus posiciones y usuarios
 
 - ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) **Node.js**: Entorno de ejecución para JavaScript en el servidor.
 - ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) **Express**: Framework web minimalista para Node.js.
-- ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white) **MongoDB**: Base de datos NoSQL para almacenar la información de empleados y usuarios.
-- ![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge) **Mongoose**: ORM para interactuar con MongoDB.
+- ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) **MongoDB**: Base de datos NoSQL para almacenar la información de empleados y usuarios.
+- ![Mongoose](https://img.shields.io/badge/Mongoose-AA0000?style=for-the-badge) **Mongoose**: ORM para interactuar con MongoDB.
 - ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white) **JWT (JSON Web Token)**: Para la autenticación y autorización de los usuarios.
 - ![BcryptJS](https://img.shields.io/badge/BcryptJS-4A90E2?style=for-the-badge) **BcryptJS**: Para la encriptación de contraseñas de los usuarios.
-- ![Passport](https://img.shields.io/badge/Passport-34E27A?style=for-the-badge&logo=passport) **Passport**: Middleware de autenticación.
+- ![Passport](https://img.shields.io/badge/Passport-3B5998?style=for-the-badge&logo=passport&logoColor=white) **Passport**: Middleware de autenticación.
 
 ## Estructura del Proyecto
 
