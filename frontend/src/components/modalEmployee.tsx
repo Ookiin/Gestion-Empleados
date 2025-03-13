@@ -6,10 +6,10 @@ import {
   ModalInput,
   ModalSelect,
   Button,
-  CancelButton,
   CloseButton,
 } from "../../styles/index";
 import { EmployeeModalProps } from "../utilities/interfaces";
+import ActionButton from "./button";
 
 const EmployeeModal: React.FC<EmployeeModalProps> = ({
   isOpen,
@@ -20,8 +20,15 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
 }) => {
   const [newFirstName, setNewFirstName] = useState<string>("");
   const [newPosition, setNewPosition] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  console.log("role", role);
 
   useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role) {
+      setRole(role);
+    }
+
     if (employee) {
       setNewFirstName(employee.firstName);
       setNewPosition(employee.position);
@@ -30,6 +37,7 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
 
   const handleUpdate = () => {
     if (employee) {
+      console.log(employee._id, newFirstName, newPosition);
       onUpdate(employee._id, newFirstName, newPosition);
       onClose();
     }
@@ -41,12 +49,13 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
     <Modal>
       <ModalContent>
         <CloseButton onClick={onClose}>×</CloseButton>
-        <ModalHeader>Editar Empleado</ModalHeader>
+        {role === "admin" ? <ModalHeader>Editar Empleado</ModalHeader> : null}
         <ModalInput
           type="text"
           value={newFirstName}
           onChange={(e) => setNewFirstName(e.target.value)}
           placeholder="Nuevo nombre"
+          readOnly={role !== "admin"}
         />
         <ModalInput
           type="text"
@@ -69,6 +78,7 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
         <ModalSelect
           value={newPosition}
           onChange={(e) => setNewPosition(e.target.value)}
+          disabled={role !== "admin"}
         >
           <option value="">Seleccione una posición</option>
           {positions.map((position, index) => (
@@ -77,7 +87,15 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
             </option>
           ))}
         </ModalSelect>
-        <Button onClick={handleUpdate}>Actualizar</Button>
+        {role === "admin" && <Button onClick={handleUpdate}>Actualizar</Button>}
+        {role === "admin" && (
+          <ActionButton
+            buttonText={"Eliminar empleado"}
+            color={"red"}
+            token={localStorage.getItem("token") || ""}
+            employeeId={employee._id}
+          />
+        )}
       </ModalContent>
     </Modal>
   );

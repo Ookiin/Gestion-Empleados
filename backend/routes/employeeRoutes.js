@@ -11,7 +11,7 @@ import protect from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.get("/", protect, getEmployees);
-router.get("/search", protect, searchEmployees);
+router.get("/search", searchEmployees);
 router.post("/", protect, createEmployee);
 router.put("/:id/update", protect, updateEmployee);
 router.delete("/:id", protect, deleteEmployee);

@@ -16,15 +16,23 @@ export async function getEmployees(req, res) {
 export async function searchEmployees(req, res) {
   try {
     const { name } = req.query;
-    const employees = await find({
-      $or: [
-        { firstName: new RegExp(name, "i") },
-        { lastName: new RegExp(name, "i") },
-      ],
-    });
-    res.status(200).json(employees);
+    if (name) {
+      const employees = await Employee.find({
+        $or: [
+          { firstName: new RegExp(name, "i") },
+          { lastName: new RegExp(name, "i") },
+        ],
+      }).populate("user", "email");
+
+      return res.status(200).json(employees);
+    }
+
+    return res
+      .status(400)
+      .json({ message: "Se requiere un término de búsqueda" });
   } catch (error) {
-    res.status(500).json({ message: "Error en la búsqueda", error });
+    console.error("Error en la búsqueda:", error);
+    return res.status(500).json({ message: "Error en la búsqueda", error });
   }
 }
 

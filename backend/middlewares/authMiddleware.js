@@ -34,24 +34,5 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-const adminOnly = (req, res, next) => {
-  if (req.user && req.user.role === "admin") {
-    next();
-  } else {
-    res.status(403).json({ message: "Acceso denegado: solo admins" });
-  }
-};
-
-const employeeOrAdmin = (req, res, next) => {
-  if (
-    req.user &&
-    (req.user.role === "admin" || req.user.id === req.params.id)
-  ) {
-    next();
-  } else {
-    res.status(403).json({ message: "No autorizado para esta acción" });
-  }
-};
-
-export { protect, adminOnly, employeeOrAdmin };
+export { protect };
 export default protect;

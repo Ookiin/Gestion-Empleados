@@ -10,6 +10,7 @@ export default function ActionButton({
   color,
 }: ButtonProps & { token: string; employeeId: string }) {
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
   const handleAction = async () => {
     if (buttonText === "Cerrar Sesión") {
@@ -20,7 +21,10 @@ export default function ActionButton({
     } else if (buttonText === "Eliminar empleado") {
       try {
         await deleteEmployee(token, employeeId);
-        if (employeeId === JSON.parse(localStorage.getItem("user")!)._id) {
+        if (
+          employeeId === JSON.parse(localStorage.getItem("user")!)._id &&
+          role === "employee"
+        ) {
           localStorage.removeItem("token");
           localStorage.removeItem("role");
           localStorage.removeItem("user");

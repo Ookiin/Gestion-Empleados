@@ -10,6 +10,12 @@ export interface Employee {
   email: string;
 }
 
+export interface User {
+  _id: string;
+  email: string;
+  role: "admin" | "employee";
+}
+
 export interface EmployeeModalProps {
   isOpen: boolean;
   employee: Employee | null;
@@ -36,4 +42,12 @@ export interface ButtonProps {
 export interface EmployeesContextType {
   employeesLength: number;
   setEmployeesLength: (length: number) => void;
+}
+
+export interface SearchProps {
+  onSearchResults: (results: Employee[]) => void;
+}
+
+export interface CardEmployeeProps {
+  employee: Employee;
 }

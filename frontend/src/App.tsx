@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import AdminLayout from "./layouts/adminLayout";
+import SearchResults from "./pages/SearchResults";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         </Route>
         <Route path="/employeeDashboard" element={<EmployeeDashboard />} />
         <Route path="/" element={<Home />} />
+        <Route path="/searchResults" element={<SearchResults />} />
       </Routes>
     </Router>
   );

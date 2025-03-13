@@ -43,8 +43,8 @@ export const updateUser = async (
   id: string,
   updateData: { position?: string; firstName?: string }
 ) => {
+  console.log("ejecutando update");
   const url = `${apiUrl}/employees/${id}/update`;
-
   try {
     const response = await axios.put(url, updateData, {
       headers: {
@@ -68,6 +68,18 @@ export const loginUser = async (email: string, password: string) => {
     password,
   });
   return response.data;
+};
+
+export const searchEmployees = async (name: string) => {
+  try {
+    const response = await axios.get(`${apiUrl}/employees/search`, {
+      params: { name },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al buscar empleados:", error);
+    throw error;
+  }
 };
 
 export const getToken = () => {

@@ -7,12 +7,14 @@ import {
   CardEmployee,
   DashboardContainerEmployee,
   EmployeeInfoEmployee,
+  SearchContainer,
   SelectContainerEmployee,
   StyledButtonEmployee,
   StyledSelectEmployee,
 } from "../../styles";
 import ActionButton from "../components/button";
 import Loader from "../components/loader";
+import Search from "../components/search";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -34,7 +36,8 @@ export default function EmployeeDashboard() {
           const employees = await fetchEmployees(token);
 
           const employee = employees.find(
-            (emp: Employee) => emp.user?._id === parsedUser._id
+            (emp: Employee) =>
+              emp._id === parsedUser._id || emp.user._id === parsedUser._id
           );
 
           if (employee) {
@@ -88,64 +91,69 @@ export default function EmployeeDashboard() {
   };
 
   return (
-    <DashboardContainerEmployee>
-      {employeeData ? (
-        <CardEmployee>
-          <h3>Datos del Empleado</h3>
-          <EmployeeInfoEmployee>
-            <p>
-              <strong>Nombre:</strong> {employeeData.firstName}{" "}
-              {employeeData.lastName}
-            </p>
-            <p>
-              <strong>Posición Actual:</strong> {activePosition}
-            </p>
-            <p>
-              <strong>Email:</strong> {employeeData.email}
-            </p>
-            <p>
-              <strong>Fecha de Nacimiento:</strong>{" "}
-              {new Date(employeeData.birthDate).toLocaleDateString("es-ES")}
-            </p>
-          </EmployeeInfoEmployee>
+    <>
+      <SearchContainer>
+        <Search />
+      </SearchContainer>
+      <DashboardContainerEmployee>
+        {employeeData ? (
+          <CardEmployee>
+            <h3>Datos del Empleado</h3>
+            <EmployeeInfoEmployee>
+              <p>
+                <strong>Nombre:</strong> {employeeData.firstName}{" "}
+                {employeeData.lastName}
+              </p>
+              <p>
+                <strong>Posición Actual:</strong> {activePosition}
+              </p>
+              <p>
+                <strong>Email:</strong> {employeeData.email}
+              </p>
+              <p>
+                <strong>Fecha de Nacimiento:</strong>{" "}
+                {new Date(employeeData.birthDate).toLocaleDateString("es-ES")}
+              </p>
+            </EmployeeInfoEmployee>
 
-          <SelectContainerEmployee>
-            <label htmlFor="position-select">Cambiar Posición:</label>
-            <StyledSelectEmployee
-              id="position-select"
-              value={newPosition}
-              onChange={(e) => setNewPosition(e.target.value)}
-            >
-              <option value="">Seleccione una posición</option>
-              {positions.map((position, index) => (
-                <option key={index} value={position}>
-                  {position}
-                </option>
-              ))}
-            </StyledSelectEmployee>
-          </SelectContainerEmployee>
+            <SelectContainerEmployee>
+              <label htmlFor="position-select">Cambiar Posición:</label>
+              <StyledSelectEmployee
+                id="position-select"
+                value={newPosition}
+                onChange={(e) => setNewPosition(e.target.value)}
+              >
+                <option value="">Seleccione una posición</option>
+                {positions.map((position, index) => (
+                  <option key={index} value={position}>
+                    {position}
+                  </option>
+                ))}
+              </StyledSelectEmployee>
+            </SelectContainerEmployee>
 
-          <StyledButtonEmployee onClick={handlePositionChange}>
-            Actualizar Posición
-          </StyledButtonEmployee>
-          <ButtonsContainer>
-            <ActionButton
-              buttonText={"Cerrar Sesión"}
-              token=""
-              employeeId=""
-              color="grey"
-            />
-            <ActionButton
-              buttonText="Eliminar empleado"
-              token={localStorage.getItem("token") || ""}
-              employeeId={employeeData._id}
-              color="red"
-            />
-          </ButtonsContainer>
-        </CardEmployee>
-      ) : (
-        <Loader />
-      )}
-    </DashboardContainerEmployee>
+            <StyledButtonEmployee onClick={handlePositionChange}>
+              Actualizar Posición
+            </StyledButtonEmployee>
+            <ButtonsContainer>
+              <ActionButton
+                buttonText={"Cerrar Sesión"}
+                token=""
+                employeeId=""
+                color="grey"
+              />
+              <ActionButton
+                buttonText="Eliminar empleado"
+                token={localStorage.getItem("token") || ""}
+                employeeId={employeeData._id}
+                color="red"
+              />
+            </ButtonsContainer>
+          </CardEmployee>
+        ) : (
+          <Loader />
+        )}
+      </DashboardContainerEmployee>
+    </>
   );
 }

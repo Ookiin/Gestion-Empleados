@@ -64,6 +64,7 @@ export const DashboardContainer = styled.div`
   padding: 1rem;
   background-color: #f4f4f9;
   border-radius: 10px;
+  margin-top: 100px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
@@ -107,7 +108,19 @@ export const EmployeeInfo = styled.div`
   width: 100%;
 `;
 
-// Modal styles
+export const SearchContainer = styled.div`
+  display: flex;
+  justify-content: center; // Centra el contenido horizontalmente
+  align-items: center; // Centra el contenido verticalmente
+  position: absolute;
+  top: 0; // Posiciona el Search en la parte superior
+  width: 100%;
+  padding: 20px;
+  background-color: #242424;
+`;
+
+// MODAL //////////////////////////////////////////////////////////////////////////
+
 export const Modal = styled.div`
   position: fixed;
   top: 0;

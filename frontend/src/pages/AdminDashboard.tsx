@@ -6,12 +6,14 @@ import {
   EmployeeList,
   EmployeeItem,
   EmployeeInfo,
+  SearchContainer,
 } from "../../styles/index";
 import ActionButton from "../components/button";
 import EmployeeModal from "../components/modalEmployee";
 import { Employee } from "../utilities/interfaces";
 import axios from "axios";
 import Loader from "../components/loader";
+import Search from "../components/search";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -99,49 +101,51 @@ export default function AdminDashboard() {
   }
 
   return (
-    <DashboardContainer>
-      <Title>Lista de empleados</Title>
-      <EmployeeList>
-        {employees.map((emp) => (
-          <div key={emp._id}>
-            <EmployeeItem>
-              <EmployeeInfo onClick={() => handleEmployeeClick(emp)}>
-                <span>
-                  {emp.firstName} {emp.lastName} - {emp.position}
-                </span>
-              </EmployeeInfo>
-              <ActionButton
-                buttonText="Eliminar empleado"
-                token={localStorage.getItem("token") || ""}
-                employeeId={emp._id}
-                color="red"
-              />
-            </EmployeeItem>
-          </div>
-        ))}
-      </EmployeeList>
-
-      <EmployeeModal
-        isOpen={!!selectedEmployee}
-        employee={selectedEmployee}
-        positions={positions}
-        onUpdate={handleUpdateEmployee}
-        onClose={() => setSelectedEmployee(null)}
-      />
-
-      <ActionButton
-        buttonText={"Cerrar Sesión"}
-        token=""
-        employeeId=""
-        color="grey"
-      />
-
-      <ActionButton
-        buttonText={"Nuevo Empleado"}
-        token=""
-        employeeId=""
-        color="green"
-      />
-    </DashboardContainer>
+    <>
+      <SearchContainer>
+        <Search />
+      </SearchContainer>
+      <DashboardContainer>
+        <Title>Lista de empleados</Title>
+        <EmployeeList>
+          {employees.map((emp) => (
+            <div key={emp._id}>
+              <EmployeeItem>
+                <EmployeeInfo onClick={() => handleEmployeeClick(emp)}>
+                  <span>
+                    {emp.firstName} {emp.lastName} - {emp.position}
+                  </span>
+                </EmployeeInfo>
+                <ActionButton
+                  buttonText="Eliminar empleado"
+                  token={localStorage.getItem("token") || ""}
+                  employeeId={emp._id}
+                  color="red"
+                />
+              </EmployeeItem>
+            </div>
+          ))}
+        </EmployeeList>
+        <EmployeeModal
+          isOpen={!!selectedEmployee}
+          employee={selectedEmployee}
+          positions={positions}
+          onUpdate={handleUpdateEmployee}
+          onClose={() => setSelectedEmployee(null)}
+        />
+        <ActionButton
+          buttonText={"Cerrar Sesión"}
+          token=""
+          employeeId=""
+          color="grey"
+        />
+        <ActionButton
+          buttonText={"Nuevo Empleado"}
+          token=""
+          employeeId=""
+          color="green"
+        />
+      </DashboardContainer>
+    </>
   );
 }
