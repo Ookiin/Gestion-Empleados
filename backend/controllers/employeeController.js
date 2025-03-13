@@ -5,9 +5,10 @@ import mongoose from "mongoose";
 
 export async function getEmployees(req, res) {
   try {
-    const employees = await find({}).populate("user", "email");
+    const employees = await Employee.find({}).populate("user", "email");
     res.status(200).json(employees);
   } catch (error) {
+    console.error("Error al obtener empleados:", error);
     res.status(500).json({ message: "Error al obtener empleados", error });
   }
 }
@@ -83,41 +84,45 @@ export async function createEmployee(req, res) {
   }
 }
 
-export async function updatePosition(req, res) {
-  console.log("Ejecutando actualización...");
-  console.log("Cuerpo de la solicitud:", req.body);
-
+export async function updateEmployee(req, res) {
   try {
-    const { position } = req.body;
+    const { firstName, position } = req.body;
 
-    if (!position) {
+    if (!position && !firstName) {
       return res
         .status(400)
-        .json({ message: "El campo 'position' es obligatorio" });
+        .json({ message: "Se requiere al menos un campo para actualizar" });
     }
 
-    const employeeId = new mongoose.Types.ObjectId(req.params.id);
-    const employee = await Employee.findById(employeeId);
+    const employee = await Employee.findOne({ user: req.params.id });
 
     if (!employee) {
       return res.status(404).json({ message: "Empleado no encontrado" });
     }
 
-    const employeeUserId = employee.user.toString();
-    if (req.user.id !== employeeUserId) {
-      return res.status(403).json({
-        message: "No autorizado para modificar el puesto de trabajo",
-      });
+    if (req.user.role === "admin") {
+      if (firstName) employee.firstName = firstName;
+      if (position) employee.position = position;
+    } else if (req.user.id === employee.user.toString()) {
+      if (position) {
+        employee.position = position;
+      } else {
+        return res
+          .status(403)
+          .json({ message: "No tienes permiso para modificar el nombre" });
+      }
+    } else {
+      return res
+        .status(403)
+        .json({ message: "No autorizado para modificar este empleado" });
     }
 
-    employee.position = position;
     await employee.save();
-
     res.status(200).json(employee);
   } catch (error) {
-    console.error("Error completo al actualizar el puesto de trabajo:", error);
+    console.error("Error al actualizar empleado:", error);
     res.status(500).json({
-      message: "Error al actualizar el puesto de trabajo",
+      message: "Error al actualizar el empleado",
       error: error.message,
     });
   }
@@ -126,12 +131,11 @@ export async function updatePosition(req, res) {
 export async function deleteEmployee(req, res) {
   try {
     const employee = await Employee.findById(req.params.id);
-
     if (!employee) {
       return res.status(404).json({ message: "Empleado no encontrado" });
     }
 
-    if (req.user.id !== employee.user.toString()) {
+    if (req.user.role !== "admin" && req.user.id !== employee.user.toString()) {
       return res
         .status(403)
         .json({ message: "No autorizado para eliminar este empleado" });
@@ -146,14 +150,5 @@ export async function deleteEmployee(req, res) {
       .json({ message: "Empleado y usuario eliminados correctamente" });
   } catch (error) {
     res.status(500).json({ message: "Error al eliminar empleado", error });
-  }
-}
-
-export async function getPositions(req, res) {
-  try {
-    const response = await get("https://ibillboard.com/api/positions");
-    res.status(200).json(response.data);
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener posiciones", error });
   }
 }

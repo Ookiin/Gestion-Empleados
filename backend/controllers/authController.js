@@ -9,48 +9,74 @@ export const registerUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const userExists = await User.findOne({ email });
-    if (userExists)
+    if (userExists) {
       return res.status(400).json({ message: "El usuario ya existe" });
+    }
 
-    const user = await User.create({ email, password });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = new User({
+      email,
+      password: hashedPassword,
+      role: "admin",
+    });
+
+    await user.save();
+
     res.status(201).json({
       _id: user._id,
       email: user.email,
       token: generateToken(user._id),
     });
   } catch (error) {
+    console.error("Error en el servidor:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
-
-export async function getAllEmployees(req, res) {
-  try {
-    const employees = await Employee.find({}).populate("user", "email");
-    res.status(200).json(employees);
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener empleados", error });
-  }
-}
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    const employee = await Employee.findOne({ user: user._id });
-    if (user && (await bcrypt.compare(password, user.password))) {
+
+    if (!user) {
+      return res.status(401).json({ message: "Credenciales inválidas" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword && user.role !== "admin") {
+      return res.status(401).json({ message: "Credenciales inválidas" });
+    }
+
+    let employeeData = null;
+    let adminData = null;
+
+    if (user.role === "admin") {
+      adminData = await User.findOne({ email: user.email });
       res.json({
         _id: user._id,
         email: user.email,
-        firstName: employee?.firstName,
-        lastName: employee?.lastName,
-        position: employee?.position,
-        birthDate: employee?.birthDate,
+        role: user.role,
         token: generateToken(user._id),
       });
-    } else {
-      res.status(401).json({ message: "Credenciales inválidas" });
+    }
+
+    if (user.role === "employee") {
+      employeeData = await Employee.findOne({ user: user._id });
+      res.json({
+        _id: user._id,
+        email: user.email,
+        firstName: employeeData?.firstName,
+        lastName: employeeData?.lastName,
+        position: employeeData?.position || "",
+        birthDate: employeeData?.birthDate || "",
+        role: user.role,
+        token: generateToken(user._id),
+      });
     }
   } catch (error) {
+    console.error("Error en el login:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
@@ -93,10 +119,10 @@ export const requestPasswordReset = async (req, res) => {
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
-    auth: { user: "tuemail@gmail.com", pass: "tucontraseña" },
+    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
   });
 
-  const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+  const resetLink = `${process.env.RESET_URL}/reset-password/${resetToken}`;
 
   await transporter.sendMail({
     to: email,
