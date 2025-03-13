@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard.tsx
 import { useState, useEffect } from "react";
 import { updateUser, fetchEmployees } from "../services/authService";
 import {
@@ -8,11 +7,13 @@ import {
   EmployeeItem,
   EmployeeInfo,
 } from "../../styles/index";
-import LogoutButton from "../components/logoutButton";
+import ActionButton from "../components/button";
 import EmployeeModal from "../components/modalEmployee";
 import { Employee } from "../utilities/interfaces";
+import axios from "axios";
+import Loader from "../components/loader";
 
-const apiPositions = import.meta.env.VITE_API_POSITIONS;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function AdminDashboard() {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -24,11 +25,10 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await fetch(apiPositions);
-        const data = await response.json();
-        setPositions(data.positions);
+        const response = await axios.get(`${apiUrl}/positions`);
+        setPositions(response.data.positions);
       } catch (error) {
-        console.error("Error al obtener posiciones:", error);
+        console.error("Error obteniendo posiciones:", error);
       }
     };
 
@@ -66,28 +66,49 @@ export default function AdminDashboard() {
     if (employee && token && (newFirstName || newPosition)) {
       try {
         if (employee.user && employee.user._id) {
-          await updateUser(token, employee.user._id, newPosition);
+          const updateData: { firstName?: string; position?: string } = {};
+
+          if (newFirstName) {
+            updateData.firstName = newFirstName;
+          }
+          if (newPosition) {
+            updateData.position = newPosition;
+          }
+
+          await updateUser(token, employee.user._id, updateData);
         }
-        alert("Posición actualizada exitosamente.");
+
         await fetchEmployeesData(token);
       } catch (error) {
-        console.error("Error al actualizar la posición:", error);
+        console.error("Error al actualizar los datos:", error);
       }
     }
   };
+
+  if (employees.length === 0) {
+    return <Loader />;
+  }
 
   return (
     <DashboardContainer>
       <Title>Lista de empleados</Title>
       <EmployeeList>
         {employees.map((emp) => (
-          <EmployeeItem key={emp._id}>
-            <EmployeeInfo onClick={() => handleEmployeeClick(emp)}>
-              <span>
-                {emp.firstName} {emp.lastName} - {emp.position}
-              </span>
-            </EmployeeInfo>
-          </EmployeeItem>
+          <div key={emp._id}>
+            <EmployeeItem>
+              <EmployeeInfo onClick={() => handleEmployeeClick(emp)}>
+                <span>
+                  {emp.firstName} {emp.lastName} - {emp.position}
+                </span>
+              </EmployeeInfo>
+              <ActionButton
+                buttonText="Eliminar empleado"
+                token={localStorage.getItem("token") || ""}
+                employeeId={emp._id}
+                color="red"
+              />
+            </EmployeeItem>
+          </div>
         ))}
       </EmployeeList>
 
@@ -99,7 +120,19 @@ export default function AdminDashboard() {
         onClose={() => setSelectedEmployee(null)}
       />
 
-      <LogoutButton />
+      <ActionButton
+        buttonText={"Cerrar Sesión"}
+        token=""
+        employeeId=""
+        color="grey"
+      />
+
+      <ActionButton
+        buttonText={"Nuevo Empleado"}
+        token=""
+        employeeId=""
+        color="green"
+      />
     </DashboardContainer>
   );
 }

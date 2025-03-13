@@ -1,5 +1,4 @@
 import axios from "axios";
-import { DataToSend } from "../utilities/interfaces";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -28,25 +27,39 @@ export const fetchEmployees = async (token: string) => {
   }
 };
 
+export const deleteEmployee = async (token: string, id: string) => {
+  try {
+    const response = await axios.delete(`${apiUrl}/employees/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar empleado:", error);
+  }
+};
+
 export const updateUser = async (
   token: string,
   id: string,
-  position: string,
-  firstName?: string
+  updateData: { position?: string; firstName?: string }
 ) => {
-  const dataToSend: DataToSend = { position };
-  if (firstName) dataToSend.firstName = firstName;
-
   const url = `${apiUrl}/employees/${id}/update`;
-  const response = await axios.put(url, dataToSend, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const updatedEmployee = response.data;
-  localStorage.setItem("user", JSON.stringify(updatedEmployee));
-  return response.data;
+
+  try {
+    const response = await axios.put(url, updateData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const updatedEmployee = response.data;
+    localStorage.setItem("user", JSON.stringify(updatedEmployee));
+    return updatedEmployee;
+  } catch (error) {
+    console.error("Error al actualizar el usuario:", error);
+    throw error;
+  }
 };
 
 export const loginUser = async (email: string, password: string) => {

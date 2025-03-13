@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { updateUser } from "../services/authService";
 import { Employee } from "../utilities/interfaces";
+import axios from "axios";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function EmployeeDashboard() {
   const [employeeData, setEmployeeData] = useState<Employee | null>(null);
@@ -21,11 +24,10 @@ export default function EmployeeDashboard() {
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await fetch("https://ibillboard.com/api/positions");
-        const data = await response.json();
-        setPositions(data.positions);
+        const response = await axios.get(`${apiUrl}/positions`);
+        setPositions(response.data.positions);
       } catch (error) {
-        console.error("Error al obtener posiciones:", error);
+        console.error("Error obteniendo posiciones:", error);
       }
     };
 
@@ -37,10 +39,9 @@ export default function EmployeeDashboard() {
     if (token && newPosition) {
       try {
         if (employeeData) {
-          await updateUser(token, employeeData._id, newPosition);
+          await updateUser(token, employeeData._id, { position: newPosition });
         }
         setActivePosition(newPosition);
-        alert("Posición actualizada exitosamente.");
       } catch (error) {
         console.error("Error al actualizar la posición:", error);
       }

@@ -75,12 +75,15 @@ export const TitleDashboard = styled.h1`
 `;
 
 export const EmployeeList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;
 
 export const EmployeeItem = styled.li`
+  display: flex;
+  align-items: center; /* Alineamos el contenido en el centro */
+  justify-content: space-between; /* Separar nombre y botón */
   background-color: #fff;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -199,17 +202,102 @@ export const CloseButton = styled.button`
 
 // LOGOUT BUTTON STYLES ///////////////////////////////////////////////////////////////////
 
-export const StyledButton = styled.button`
-  width: 100%;
-  background-color: #f44336;
+interface StyledButtonProps {
+  color: string;
+  $buttonText: string; // Cambia buttonText a $buttonText
+}
+
+export const StyledButton = styled.button<StyledButtonProps>`
+  background-color: ${({ color }) => color};
   color: white;
   font-weight: 600;
-  padding: 1rem;
+  padding: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "0.5rem 1rem" : "1rem"};
   border-radius: 8px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  width: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "auto" : "50%"};
+  margin-left: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "10px" : "0"};
+  align-self: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "center" : "stretch"};
 
   &:hover {
-    background-color: #e53935;
+    background-color: ${({ color }) => color};
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+//  NEW EMPLOYEE  ///////////////////////////////////////////////////////////////////
+
+export const ContainerRegister = styled.div`
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+`;
+
+export const TitleRegister = styled.h2`
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
+export const FormRegister = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+export const InputRegister = styled.input`
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #4d90fe;
+  }
+
+  &::placeholder {
+    color: #aaa;
+  }
+`;
+
+export const SelectRegister = styled.select`
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #4d90fe;
+  }
+`;
+
+export const ButtonRegister = styled.button`
+  padding: 12px;
+  background-color: #4d90fe;
+  color: #ffffff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #357ae8;
+  }
+
+  &:active {
+    background-color: #2e6cb3;
   }
 `;

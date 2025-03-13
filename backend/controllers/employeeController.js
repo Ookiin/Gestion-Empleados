@@ -131,12 +131,11 @@ export async function updateEmployee(req, res) {
 export async function deleteEmployee(req, res) {
   try {
     const employee = await Employee.findById(req.params.id);
-
     if (!employee) {
       return res.status(404).json({ message: "Empleado no encontrado" });
     }
 
-    if (req.user.id !== employee.user.toString()) {
+    if (req.user.role !== "admin" && req.user.id !== employee.user.toString()) {
       return res
         .status(403)
         .json({ message: "No autorizado para eliminar este empleado" });

@@ -25,3 +25,14 @@ export interface DataToSend {
   position: string;
   firstName?: string;
 }
+
+export interface ButtonProps {
+  buttonText: string;
+  onDeleteUser?: () => void;
+  color: string;
+}
+
+export interface EmployeesContextType {
+  employeesLength: number;
+  setEmployeesLength: (length: number) => void;
+}

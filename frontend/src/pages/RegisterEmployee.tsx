@@ -1,6 +1,16 @@
-// src/pages/RegisterEmployee.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  ButtonRegister,
+  ContainerRegister,
+  FormRegister,
+  InputRegister,
+  SelectRegister,
+  TitleRegister,
+} from "../../styles";
+import { useNavigate } from "react-router-dom";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function RegisterEmployee() {
   const [firstName, setFirstName] = useState("");
@@ -8,16 +18,18 @@ export default function RegisterEmployee() {
   const [position, setPosition] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [positions, setPositions] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await axios.get(
-          "https://ibillboard.com/api/positions"
-        );
-        setPositions(response.data);
+        const response = await axios.get(`${apiUrl}/positions`);
+        setPositions(response.data.positions);
       } catch (error) {
-        console.error("Error fetching positions:", error);
+        console.error("Error obteniendo posiciones:", error);
       }
     };
 
@@ -26,53 +38,91 @@ export default function RegisterEmployee() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("Token no encontrado");
+      return;
+    }
+
     try {
       const newEmployee = {
         firstName,
         lastName,
         position,
         birthDate,
+        email,
+        password,
       };
-      await axios.post("http://localhost:5000/api/employees", newEmployee);
-      alert("Empleado registrado");
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      await axios.post(`${apiUrl}/employees`, newEmployee, config);
+      navigate("/adminDashboard");
     } catch (error) {
       console.error("Error registrando empleado:", error);
-      alert("Error registrando empleado");
     }
   };
 
+  const handleBack = () => {
+    navigate("/adminDashboard");
+  };
+
   return (
-    <div>
-      <h2>Registrar Empleado</h2>
-      <form onSubmit={handleSubmit}>
-        <input
+    <ContainerRegister>
+      <TitleRegister>Registrar Empleado</TitleRegister>
+      <FormRegister onSubmit={handleSubmit}>
+        <InputRegister
+          type="text"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <InputRegister
+          type="text"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <InputRegister
           type="text"
           placeholder="Primer nombre"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
-        <input
+        <InputRegister
           type="text"
           placeholder="Apellido"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <select onChange={(e) => setPosition(e.target.value)} value={position}>
+        <SelectRegister
+          onChange={(e) => setPosition(e.target.value)}
+          value={position}
+        >
           <option value="">Seleccionar puesto</option>
           {positions.map((pos) => (
             <option key={pos} value={pos}>
               {pos}
             </option>
           ))}
-        </select>
-        <input
+        </SelectRegister>
+        <InputRegister
           type="date"
           placeholder="Fecha de nacimiento"
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
         />
-        <button type="submit">Registrar</button>
-      </form>
-    </div>
+        <ButtonRegister type="submit">Registrar</ButtonRegister>
+        <ButtonRegister type="button" onClick={handleBack}>
+          Cancelar
+        </ButtonRegister>
+      </FormRegister>
+    </ContainerRegister>
   );
 }
