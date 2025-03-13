@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function RegisterEmployee() {
+export default function RegisterEmployee() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [position, setPosition] = useState("");
@@ -76,5 +76,3 @@ function RegisterEmployee() {
     </div>
   );
 }
-
-export default RegisterEmployee;

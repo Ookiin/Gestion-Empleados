@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { loginUser } from "../services/authService.js";
 import { useNavigate } from "react-router-dom";
+import {
+  LoginContainer,
+  FormWrapper,
+  Title,
+  Input,
+  Button,
+} from "../../styles/index.js";
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -26,25 +33,25 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <LoginContainer>
+      <FormWrapper>
+        <Title>Iniciar Sesión</Title>
+        <form onSubmit={handleLogin}>
+          <Input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit">Iniciar Sesión</Button>
+        </form>
+      </FormWrapper>
+    </LoginContainer>
   );
 }
-
-export default Login;

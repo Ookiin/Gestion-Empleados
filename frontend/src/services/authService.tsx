@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DataToSend } from "../utilities/interfaces";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -33,11 +34,6 @@ export const updateUser = async (
   position: string,
   firstName?: string
 ) => {
-  interface DataToSend {
-    position: string;
-    firstName?: string;
-  }
-  console.log("id en funcion updateUser", id);
   const dataToSend: DataToSend = { position };
   if (firstName) dataToSend.firstName = firstName;
 

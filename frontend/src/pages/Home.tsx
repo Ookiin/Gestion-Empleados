@@ -1,35 +1,9 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AdminDashboard from "../pages/AdminDashboard";
-import EmployeeDashboard from "../pages/EmployeeDashboard";
+import RoleRedirect from "../components/roleRedirect";
 
-function Home() {
-  const navigate = useNavigate();
-
-  const [role, setRole] = useState<string | null>(null);
-
-  useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-
-    if (storedRole) {
-      setRole(storedRole);
-    } else {
-      navigate("/login");
-    }
-  }, [navigate]);
-
+export default function Home() {
   return (
     <div>
-      <h2>Bienvenido</h2>
-      {role === "admin" ? (
-        <AdminDashboard />
-      ) : role === "employee" ? (
-        <EmployeeDashboard />
-      ) : (
-        <p>Redirigiendo...</p>
-      )}
+      <RoleRedirect />
     </div>
   );
 }
-
-export default Home;

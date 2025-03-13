@@ -1,27 +1,30 @@
+// src/pages/AdminDashboard.tsx
 import { useState, useEffect } from "react";
 import { updateUser, fetchEmployees } from "../services/authService";
+import {
+  DashboardContainer,
+  Title,
+  EmployeeList,
+  EmployeeItem,
+  EmployeeInfo,
+} from "../../styles/index";
+import LogoutButton from "../components/logoutButton";
+import EmployeeModal from "../components/modalEmployee";
+import { Employee } from "../utilities/interfaces";
 
-interface Employee {
-  user: {
-    _id: string;
-  };
-  _id: string;
-  firstName: string;
-  lastName: string;
-  position: string;
-}
+const apiPositions = import.meta.env.VITE_API_POSITIONS;
 
-function AdminDashboard() {
+export default function AdminDashboard() {
   const [employees, setEmployees] = useState<Employee[]>([]);
-  const [editEmployeeId, setEditEmployeeId] = useState<string | null>(null);
-  const [newFirstName, setNewFirstName] = useState<string>("");
-  const [newPosition, setNewPosition] = useState<string>("");
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
   const [positions, setPositions] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await fetch("https://ibillboard.com/api/positions");
+        const response = await fetch(apiPositions);
         const data = await response.json();
         setPositions(data.positions);
       } catch (error) {
@@ -48,13 +51,15 @@ function AdminDashboard() {
     }
   };
 
-  const handleEditClick = (employee: Employee) => {
-    setEditEmployeeId(employee._id);
-    setNewFirstName(employee.firstName);
-    setNewPosition(employee.position);
+  const handleEmployeeClick = (employee: Employee) => {
+    setSelectedEmployee(employee);
   };
 
-  const handleUpdateEmployee = async (employeeId: string) => {
+  const handleUpdateEmployee = async (
+    employeeId: string,
+    newFirstName: string,
+    newPosition: string
+  ) => {
     const token = localStorage.getItem("token");
     const employee = employees.find((emp) => emp._id === employeeId);
 
@@ -72,48 +77,29 @@ function AdminDashboard() {
   };
 
   return (
-    <div>
-      <h3>Lista de empleados</h3>
-      <ul>
+    <DashboardContainer>
+      <Title>Lista de empleados</Title>
+      <EmployeeList>
         {employees.map((emp) => (
-          <li key={emp._id}>
-            {editEmployeeId === emp._id ? (
-              <div>
-                <input
-                  type="text"
-                  value={newFirstName}
-                  onChange={(e) => setNewFirstName(e.target.value)}
-                  placeholder="Nuevo nombre"
-                />
-                <select
-                  value={newPosition}
-                  onChange={(e) => setNewPosition(e.target.value)}
-                >
-                  <option value="">Seleccione una posición</option>
-                  {positions.map((position, index) => (
-                    <option key={index} value={position}>
-                      {position}
-                    </option>
-                  ))}
-                </select>
-                <button onClick={() => handleUpdateEmployee(emp._id)}>
-                  Actualizar
-                </button>
-                <button onClick={() => setEditEmployeeId(null)}>
-                  Cancelar
-                </button>
-              </div>
-            ) : (
-              <div>
+          <EmployeeItem key={emp._id}>
+            <EmployeeInfo onClick={() => handleEmployeeClick(emp)}>
+              <span>
                 {emp.firstName} {emp.lastName} - {emp.position}
-                <button onClick={() => handleEditClick(emp)}>Editar</button>
-              </div>
-            )}
-          </li>
+              </span>
+            </EmployeeInfo>
+          </EmployeeItem>
         ))}
-      </ul>
-    </div>
+      </EmployeeList>
+
+      <EmployeeModal
+        isOpen={!!selectedEmployee}
+        employee={selectedEmployee}
+        positions={positions}
+        onUpdate={handleUpdateEmployee}
+        onClose={() => setSelectedEmployee(null)}
+      />
+
+      <LogoutButton />
+    </DashboardContainer>
   );
 }
-
-export default AdminDashboard;

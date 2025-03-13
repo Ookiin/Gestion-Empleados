@@ -1,15 +1,8 @@
 import { useState, useEffect } from "react";
 import { updateUser } from "../services/authService";
+import { Employee } from "../utilities/interfaces";
 
-function EmployeeDashboard() {
-  interface Employee {
-    firstName: string;
-    lastName: string;
-    position: string;
-    birthDate: string;
-    _id: string;
-  }
-
+export default function EmployeeDashboard() {
   const [employeeData, setEmployeeData] = useState<Employee | null>(null);
   const [newPosition, setNewPosition] = useState<string>("");
   const [positions, setPositions] = useState<string[]>([]);
@@ -64,7 +57,6 @@ function EmployeeDashboard() {
           </p>
           <p>Fecha de nacimiento: {employeeData.birthDate}</p>
 
-          {/* Mostrar un select con las posiciones obtenidas */}
           <select
             value={newPosition}
             onChange={(e) => setNewPosition(e.target.value)}
@@ -85,5 +77,3 @@ function EmployeeDashboard() {
     </div>
   );
 }
-
-export default EmployeeDashboard;
