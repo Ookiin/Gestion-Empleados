@@ -7,6 +7,7 @@ export interface Employee {
   lastName: string;
   position: string;
   birthDate: number;
+  email: string;
 }
 
 export interface EmployeeModalProps {

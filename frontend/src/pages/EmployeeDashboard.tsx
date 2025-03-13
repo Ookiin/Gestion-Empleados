@@ -1,7 +1,18 @@
 import { useState, useEffect } from "react";
-import { updateUser } from "../services/authService";
+import { fetchEmployees, updateUser } from "../services/authService";
 import { Employee } from "../utilities/interfaces";
 import axios from "axios";
+import {
+  ButtonsContainer,
+  CardEmployee,
+  DashboardContainerEmployee,
+  EmployeeInfoEmployee,
+  SelectContainerEmployee,
+  StyledButtonEmployee,
+  StyledSelectEmployee,
+} from "../../styles";
+import ActionButton from "../components/button";
+import Loader from "../components/loader";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -13,13 +24,39 @@ export default function EmployeeDashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        setEmployeeData(JSON.parse(userData));
-      }
+    const userData = localStorage.getItem("user");
+
+    if (token && userData) {
+      const parsedUser = JSON.parse(userData);
+
+      const getEmployeeData = async () => {
+        try {
+          const employees = await fetchEmployees(token);
+
+          const employee = employees.find(
+            (emp: Employee) => emp.user?._id === parsedUser._id
+          );
+
+          if (employee) {
+            setEmployeeData(employee);
+            localStorage.setItem("user", JSON.stringify(employee));
+          } else {
+            console.error("Empleado no encontrado");
+          }
+        } catch (error) {
+          console.error("Error obteniendo datos del empleado:", error);
+        }
+      };
+
+      getEmployeeData();
     }
   }, []);
+
+  useEffect(() => {
+    if (employeeData) {
+      setActivePosition(employeeData.position);
+    }
+  }, [employeeData]);
 
   useEffect(() => {
     const fetchPositions = async () => {
@@ -38,10 +75,12 @@ export default function EmployeeDashboard() {
     const token = localStorage.getItem("token");
     if (token && newPosition) {
       try {
-        if (employeeData) {
-          await updateUser(token, employeeData._id, { position: newPosition });
+        if (employeeData && employeeData.user) {
+          await updateUser(token, employeeData.user._id, {
+            position: newPosition,
+          });
+          setActivePosition(newPosition);
         }
-        setActivePosition(newPosition);
       } catch (error) {
         console.error("Error al actualizar la posición:", error);
       }
@@ -49,32 +88,64 @@ export default function EmployeeDashboard() {
   };
 
   return (
-    <div>
+    <DashboardContainerEmployee>
       {employeeData ? (
-        <div>
-          <h3>Datos del empleado</h3>
-          <p>
-            {employeeData.firstName} {employeeData.lastName} - {activePosition}
-          </p>
-          <p>Fecha de nacimiento: {employeeData.birthDate}</p>
+        <CardEmployee>
+          <h3>Datos del Empleado</h3>
+          <EmployeeInfoEmployee>
+            <p>
+              <strong>Nombre:</strong> {employeeData.firstName}{" "}
+              {employeeData.lastName}
+            </p>
+            <p>
+              <strong>Posición Actual:</strong> {activePosition}
+            </p>
+            <p>
+              <strong>Email:</strong> {employeeData.email}
+            </p>
+            <p>
+              <strong>Fecha de Nacimiento:</strong>{" "}
+              {new Date(employeeData.birthDate).toLocaleDateString("es-ES")}
+            </p>
+          </EmployeeInfoEmployee>
 
-          <select
-            value={newPosition}
-            onChange={(e) => setNewPosition(e.target.value)}
-          >
-            <option value="">Seleccione una posición</option>
-            {positions.map((position, index) => (
-              <option key={index} value={position}>
-                {position}
-              </option>
-            ))}
-          </select>
+          <SelectContainerEmployee>
+            <label htmlFor="position-select">Cambiar Posición:</label>
+            <StyledSelectEmployee
+              id="position-select"
+              value={newPosition}
+              onChange={(e) => setNewPosition(e.target.value)}
+            >
+              <option value="">Seleccione una posición</option>
+              {positions.map((position, index) => (
+                <option key={index} value={position}>
+                  {position}
+                </option>
+              ))}
+            </StyledSelectEmployee>
+          </SelectContainerEmployee>
 
-          <button onClick={handlePositionChange}>Actualizar posición</button>
-        </div>
+          <StyledButtonEmployee onClick={handlePositionChange}>
+            Actualizar Posición
+          </StyledButtonEmployee>
+          <ButtonsContainer>
+            <ActionButton
+              buttonText={"Cerrar Sesión"}
+              token=""
+              employeeId=""
+              color="grey"
+            />
+            <ActionButton
+              buttonText="Eliminar empleado"
+              token={localStorage.getItem("token") || ""}
+              employeeId={employeeData._id}
+              color="red"
+            />
+          </ButtonsContainer>
+        </CardEmployee>
       ) : (
-        <p>Cargando datos del empleado...</p>
+        <Loader />
       )}
-    </div>
+    </DashboardContainerEmployee>
   );
 }

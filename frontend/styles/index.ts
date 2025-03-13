@@ -7,7 +7,7 @@ export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  background-color: #242424;
   padding: 20px;
 `;
 
@@ -204,8 +204,17 @@ export const CloseButton = styled.button`
 
 interface StyledButtonProps {
   color: string;
-  $buttonText: string; // Cambia buttonText a $buttonText
+  $buttonText: string;
 }
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  height: 50%;
+  padding: 10px;
+`;
 
 export const StyledButton = styled.button<StyledButtonProps>`
   background-color: ${({ color }) => color};
@@ -299,5 +308,72 @@ export const ButtonRegister = styled.button`
 
   &:active {
     background-color: #2e6cb3;
+  }
+`;
+
+// EMPLOYEE DASHBOARD ///////////////////////////////////////////////////////////////////
+
+export const DashboardContainerEmployee = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #242424;
+`;
+
+export const CardEmployee = styled.div`
+  background: white;
+  padding: 2rem;
+  color: black;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+`;
+
+export const EmployeeInfoEmployee = styled.div`
+  margin: 1rem 0;
+  text-align: left;
+  p {
+    margin: 0.5rem 0;
+  }
+`;
+
+export const SelectContainerEmployee = styled.div`
+  margin-top: 1rem;
+  text-align: left;
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+export const StyledSelectEmployee = styled.select`
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+`;
+
+export const StyledButtonEmployee = styled.button`
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;

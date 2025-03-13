@@ -56,7 +56,13 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
         />
         <ModalInput
           type="text"
-          value={employee.birthDate}
+          value={employee.email}
+          readOnly
+          placeholder="Email"
+        />
+        <ModalInput
+          type="text"
+          value={new Date(employee.birthDate).toLocaleDateString("es-ES")}
           readOnly
           placeholder="Fecha de nacimiento"
         />
@@ -72,7 +78,6 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
           ))}
         </ModalSelect>
         <Button onClick={handleUpdate}>Actualizar</Button>
-        <CancelButton onClick={onClose}>Cancelar</CancelButton>
       </ModalContent>
     </Modal>
   );

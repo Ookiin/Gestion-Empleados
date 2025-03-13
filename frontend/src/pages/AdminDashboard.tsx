@@ -21,6 +21,7 @@ export default function AdminDashboard() {
     null
   );
   const [positions, setPositions] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPositions = async () => {
@@ -85,7 +86,15 @@ export default function AdminDashboard() {
     }
   };
 
-  if (employees.length === 0) {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (isLoading && employees.length === 0) {
     return <Loader />;
   }
 

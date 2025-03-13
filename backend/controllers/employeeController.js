@@ -68,6 +68,7 @@ export async function createEmployee(req, res) {
       firstName,
       lastName,
       position,
+      email,
       birthDate,
       user: newUser._id,
     });
