@@ -18,33 +18,38 @@ El proyecto está organizado de la siguiente manera:
 
 ## Requisitos
 
-No hay requisitos específicos para este proyecto.
+Antes de ejecutar la aplicación, instala las dependencias necesarias:
 
-## Instalación
-
-No se requiere instalación para este proyecto.
+```javascript
+npm install
+```
 
 ## Uso
 
-No hay instrucciones de uso específicas para este proyecto.
+Inicia el frontend ejecutando:
 
-## Contribución
+```javascript
+npm run dev
+```
 
-1. Hacer un fork del repositorio.
-2. Crear una nueva rama:
-   ```bash
-   git checkout -b feature/nueva-funcionalidad
-   ```
-3. Realizar los cambios y hacer commit:
-   ```bash
-   git commit -m "Añadir nueva funcionalidad"
-   ```
-4. Hacer push a la rama:
-   ```bash
-   git push origin feature/nueva-funcionalidad
-   ```
-5. Crear un Pull Request.
+Ejecutara el front end en:
 
-## Licencia
+```javascript
+http://localhost:5173
+```
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+## 🔑 Credenciales de Acceso
+
+La aplicación ya cuenta con un usuario administrador predefinido:
+
+Correo: admin@admin.com
+
+Contraseña: admin123
+
+### 🎯 Importante
+
+Solo el administrador puede crear empleados en la plataforma.
+
+Cuando el administrador registra un nuevo empleado, debe proporcionarle el correo y la contraseña generada para que el empleado pueda iniciar sesión.
+
+Los empleados solo pueden modificar su puesto de trabajo o eliminar su cuenta.
