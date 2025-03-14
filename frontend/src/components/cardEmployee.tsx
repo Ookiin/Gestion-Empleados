@@ -26,6 +26,8 @@ const styles = {
     padding: "20px",
     margin: "10px 0",
     borderRadius: "8px",
+    color: "black",
+    backgroundColor: "#f4f4f9",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
   },
 };

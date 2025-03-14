@@ -7,9 +7,11 @@ import {
   ModalSelect,
   Button,
   CloseButton,
+  ButtonsContainer,
 } from "../../styles/index";
 import { EmployeeModalProps } from "../utilities/interfaces";
 import ActionButton from "./button";
+import { useLocation } from "react-router-dom";
 
 const EmployeeModal: React.FC<EmployeeModalProps> = ({
   isOpen,
@@ -21,7 +23,9 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
   const [newFirstName, setNewFirstName] = useState<string>("");
   const [newPosition, setNewPosition] = useState<string>("");
   const [role, setRole] = useState<string>("");
-  console.log("role", role);
+
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   useEffect(() => {
     const role = localStorage.getItem("role");
@@ -87,15 +91,19 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
             </option>
           ))}
         </ModalSelect>
-        {role === "admin" && <Button onClick={handleUpdate}>Actualizar</Button>}
-        {role === "admin" && (
-          <ActionButton
-            buttonText={"Eliminar empleado"}
-            color={"red"}
-            token={localStorage.getItem("token") || ""}
-            employeeId={employee._id}
-          />
-        )}
+        <ButtonsContainer>
+          {role === "admin" && (
+            <Button onClick={handleUpdate}>Actualizar</Button>
+          )}
+          {role === "admin" && currentPath !== "/adminDashboard" && (
+            <ActionButton
+              buttonText={"Eliminar empleado"}
+              color={"red"}
+              token={localStorage.getItem("token") || ""}
+              employeeId={employee._id}
+            />
+          )}
+        </ButtonsContainer>
       </ModalContent>
     </Modal>
   );

@@ -43,6 +43,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   width: 100%;
+  height: 50px;
   padding: 1rem;
   background-color: #4ca1af;
   border: none;
@@ -110,10 +111,10 @@ export const EmployeeInfo = styled.div`
 
 export const SearchContainer = styled.div`
   display: flex;
-  justify-content: center; // Centra el contenido horizontalmente
-  align-items: center; // Centra el contenido verticalmente
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: 0; // Posiciona el Search en la parte superior
+  top: 0;
   width: 100%;
   padding: 20px;
   background-color: #242424;
@@ -388,5 +389,85 @@ export const StyledButtonEmployee = styled.button`
   &:hover {
     background-color: #0056b3;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+// SEARCH //////////////////////////////////////////////////////////////////
+
+export const Container = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CardsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+  padding: 0 20px;
+`;
+
+export const CardWrapper = styled.div`
+  flex: 0 0 300px;
+  display: flex;
+  justify-content: center;
+`;
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+export const SearchButton = styled(Button)`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+`;
+
+export const SearchContainerInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+export const SearchInput = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  }
+`;
+
+export const SearchButtonInput = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
   }
 `;

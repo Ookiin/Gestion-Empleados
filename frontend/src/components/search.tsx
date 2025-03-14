@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { searchEmployees } from "../services/authService";
 import { useState } from "react";
+import {
+  SearchContainerInput,
+  SearchInput,
+  SearchButtonInput,
+} from "../../styles";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -19,14 +24,14 @@ export default function Search() {
   };
 
   return (
-    <div>
-      <input
+    <SearchContainerInput>
+      <SearchInput
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Buscar empleado por nombre o apellido"
+        placeholder="Buscar empleado"
       />
-      <button onClick={handleSearch}>Buscar</button>
-    </div>
+      <SearchButtonInput onClick={handleSearch}>Buscar</SearchButtonInput>
+    </SearchContainerInput>
   );
 }

@@ -5,6 +5,13 @@ import CardEmployee from "../components/cardEmployee";
 import EmployeeModal from "../components/modalEmployee";
 import axios from "axios";
 import { fetchEmployees, updateUser } from "../services/authService";
+import {
+  ButtonContainer,
+  CardsContainer,
+  CardWrapper,
+  Container,
+  SearchButton,
+} from "../../styles";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -79,24 +86,25 @@ export default function SearchResults() {
   };
 
   return (
-    <div>
+    <Container>
       <h1>Resultados de la Búsqueda</h1>
       {results && results.length > 0 ? (
-        <div>
+        <CardsContainer>
           {results.map((employee: Employee) => (
-            <div
+            <CardWrapper
               key={employee._id}
               onClick={() => setSelectedEmployee(employee)}
             >
               <CardEmployee employee={employee} />
-            </div>
+            </CardWrapper>
           ))}
-        </div>
+        </CardsContainer>
       ) : (
         <p>No se encontraron empleados.</p>
       )}
-      <button onClick={() => navigate(-1)}>Volver</button>
-
+      <ButtonContainer>
+        <SearchButton onClick={() => navigate(-1)}>Volver</SearchButton>
+      </ButtonContainer>
       {selectedEmployee && (
         <EmployeeModal
           isOpen={!!selectedEmployee}
@@ -106,6 +114,6 @@ export default function SearchResults() {
           onClose={() => setSelectedEmployee(null)}
         />
       )}
-    </div>
+    </Container>
   );
 }
