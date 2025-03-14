@@ -21,7 +21,8 @@ npm run dev
 En la carpeta frontend se debe crear un archivo .env que incluira lo siguiente:
 
 ```
-VITE_API_URL=http://localhost:(numero de puerto a eleccion: 3000, 5000, etc)/api
+VITE_API_URL=http://localhost:5173/api
+
 ```
 
 ## Estructura del Proyecto

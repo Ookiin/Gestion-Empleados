@@ -16,6 +16,30 @@ Para iniciar el servidor se debe ejecutar el comando en consola
 npm start
 ```
 
+## Variables de entorno
+
+En la carpeta backend se debe crear un archivo .env que incluira lo siguiente:
+
+```
+PORT=5000                         # Puerto en el que la app correrá. Cambia este valor si el puerto 5000 está ocupado.
+MONGO_URI=mongodb+srv://<usuario>:<contraseña>@cluster0.avvzz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 # URI de conexión a la base de datos MongoDB (Atlas)
+JWT_SECRET=<clave_secreta>        # Clave secreta para generar y verificar los tokens JWT. Genera una clave secreta única.
+EMAIL_USER=<correo_de_envio>      # Correo electrónico desde el que se enviarán los correos (para recuperar contraseñas, por ejemplo)
+EMAIL_PASS=<contraseña_correo>   # Contraseña de la cuenta de correo (para enviar correos)
+RESET_URL=http://localhost:5173  # URL a la que se redirigirá el usuario para resetear la contraseña. Cambia según tu entorno.
+API_POSITIONS=https://ibillboard.com/api/positions  # URL de la API para obtener las posiciones disponibles
+
+```
+
+### Notas Importantes:
+
+PORT: Este valor indica el puerto en el que la aplicación frontend se ejecutará. Si ya tienes otra aplicación utilizando ese puerto, puedes cambiarlo a otro disponible en tu máquina.
+MONGO_URI: Es la URI para conectar con tu base de datos en MongoDB Atlas. Si estás utilizando una base de datos local o diferente, ajusta esta URI.
+JWT_SECRET: Debes generar una clave secreta única para usarla en la autenticación de los usuarios con JWT.
+EMAIL_USER y EMAIL_PASS: Son las credenciales de la cuenta de correo electrónico que se usará para enviar correos, como para el restablecimiento de contraseñas.
+RESET_URL: La URL a la que se enviará el enlace de restablecimiento de contraseña.
+API_POSITIONS: URL de la API externa que contiene las posiciones de trabajo.
+
 ## Introducción
 
 Este backend está diseñado para gestionar empleados, sus posiciones y usuarios asociados. Está basado en Node.js con Express y MongoDB como base de datos. Utiliza JWT para la autenticación y bcrypt para la encriptación de contraseñas. La API sigue el patrón RESTful y proporciona funcionalidades para CRUD (crear, leer, actualizar y eliminar) de empleados.
