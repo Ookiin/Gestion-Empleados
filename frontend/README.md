@@ -92,6 +92,8 @@ if (userRole === "admin") {
 authService.tsx:
 Este archivo contiene las funciones que interactúan con la API backend. Incluye métodos para actualizar los datos del usuario, obtener la lista de empleados, etc.
 
+Ejemplo:
+
 ```javascript
 export const fetchPositions = async () => {
   try {
@@ -105,27 +107,40 @@ export const fetchPositions = async () => {
 
 # Estilos
 
-Los estilos se gestionan mediante un archivo de estilos centralizados para asegurar que los componentes mantengan una apariencia consistente. Los estilos están definidos en el archivo index.ts dentro de la carpeta styles.
+Los estilos se gestionan mediante un archivo de estilos centralizados para asegurar que los componentes mantengan una apariencia consistente. Los estilos están definidos en el archivo index.ts dentro de la carpeta styles. Ademas reciben props que afectan segun el caso un cambio de estilo haciendo cada componente modulable y reutilizable
 
-Ejemplo de un botón estilizado:
+Ejemplo de un botón estilizado utilizando una prop del texto del boton "Eliminar empleado":
 
 ```javascript
-export const Button = styled.button`
-  background-color: #4caf50;
+export const StyledButton =
+  styled.button <
+  StyledButtonProps >
+  `
+  background-color: ${({ color }) => color};
   color: white;
-  border: none;
-  padding: 10px 20px;
+  font-weight: 600;
+  padding: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "0.5rem 1rem" : "1rem"};
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  width: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "auto" : "50%"};
+  margin-left: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "10px" : "0"};
+  align-self: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "center" : "stretch"};
 
   &:hover {
-    background-color: #45a049;
+    background-color: ${({ color }) => color};
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
 ```
 
 ### Conclusión
 
-El frontend está diseñado para ser modular, con componentes reutilizables como el EmployeeModal y SearchResults. La lógica de autorización se maneja utilizando el rol del usuario almacenado en localStorage, asegurando que solo los administradores puedan editar la información de los empleados. La autenticación y el acceso se gestionan adecuadamente, con todos los datos del usuario y el token siendo guardados y utilizados según sea necesario para las operaciones de la aplicación.
+El frontend está diseñado para ser modular, con componentes reutilizables como el EmployeeModal, SearchResults, ActionButton, etc. La lógica de autorización se maneja utilizando el rol del usuario almacenado en localStorage, asegurando que solo los administradores puedan editar la información de los empleados. La autenticación y el acceso se gestionan adecuadamente, con todos los datos del usuario y el token siendo guardados y utilizados según sea necesario para las operaciones de la aplicación.
 
 # React + TypeScript + Vite
 
