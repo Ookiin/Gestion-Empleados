@@ -27,6 +27,13 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const handleUpdate = () => {
+    if (employee) {
+      onUpdate(employee._id, newFirstName, newPosition);
+      onClose();
+    }
+  };
+
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role) {
@@ -38,13 +45,6 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
       setNewPosition(employee.position);
     }
   }, [employee]);
-
-  const handleUpdate = () => {
-    if (employee) {
-      onUpdate(employee._id, newFirstName, newPosition);
-      onClose();
-    }
-  };
 
   if (!isOpen || !employee) return null;
 

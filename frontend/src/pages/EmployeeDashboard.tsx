@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import { fetchEmployees, updateUser } from "../services/authService";
+import {
+  fetchEmployees,
+  fetchPositions,
+  updateUser,
+} from "../services/authService";
 import { Employee } from "../utilities/interfaces";
-import axios from "axios";
 import {
   ButtonsContainer,
   CardEmployee,
@@ -16,13 +19,32 @@ import ActionButton from "../components/button";
 import Loader from "../components/loader";
 import Search from "../components/search";
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 export default function EmployeeDashboard() {
   const [employeeData, setEmployeeData] = useState<Employee | null>(null);
   const [newPosition, setNewPosition] = useState<string>("");
   const [positions, setPositions] = useState<string[]>([]);
   const [activePosition, setActivePosition] = useState<string>("");
+
+  const getPositions = async () => {
+    const response = await fetchPositions();
+    setPositions(response.positions);
+  };
+
+  const handlePositionChange = async () => {
+    const token = localStorage.getItem("token");
+    if (token && newPosition) {
+      try {
+        if (employeeData && employeeData.user) {
+          await updateUser(token, employeeData.user._id, {
+            position: newPosition,
+          });
+          setActivePosition(newPosition);
+        }
+      } catch (error) {
+        console.error("Error al actualizar la posición:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -53,6 +75,7 @@ export default function EmployeeDashboard() {
 
       getEmployeeData();
     }
+    getPositions();
   }, []);
 
   useEffect(() => {
@@ -60,35 +83,6 @@ export default function EmployeeDashboard() {
       setActivePosition(employeeData.position);
     }
   }, [employeeData]);
-
-  useEffect(() => {
-    const fetchPositions = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/positions`);
-        setPositions(response.data.positions);
-      } catch (error) {
-        console.error("Error obteniendo posiciones:", error);
-      }
-    };
-
-    fetchPositions();
-  }, []);
-
-  const handlePositionChange = async () => {
-    const token = localStorage.getItem("token");
-    if (token && newPosition) {
-      try {
-        if (employeeData && employeeData.user) {
-          await updateUser(token, employeeData.user._id, {
-            position: newPosition,
-          });
-          setActivePosition(newPosition);
-        }
-      } catch (error) {
-        console.error("Error al actualizar la posición:", error);
-      }
-    }
-  };
 
   return (
     <>

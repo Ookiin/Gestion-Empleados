@@ -589,3 +589,20 @@ export const Message = styled.p`
   color: #d9534f;
   font-size: 14px;
 `;
+
+export const Card = styled.div`
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  color: black;
+  background-color: #f4f4f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+`;
+
+export const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;

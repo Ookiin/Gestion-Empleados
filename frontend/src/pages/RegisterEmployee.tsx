@@ -9,6 +9,7 @@ import {
   TitleRegister,
 } from "../../styles";
 import { useNavigate } from "react-router-dom";
+import { fetchPositions } from "../services/authService";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -23,18 +24,10 @@ export default function RegisterEmployee() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPositions = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/positions`);
-        setPositions(response.data.positions);
-      } catch (error) {
-        console.error("Error obteniendo posiciones:", error);
-      }
-    };
-
-    fetchPositions();
-  }, []);
+  const getPositions = async () => {
+    const response = await fetchPositions();
+    setPositions(response.positions);
+  };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -72,6 +65,10 @@ export default function RegisterEmployee() {
   const handleBack = () => {
     navigate("/adminDashboard");
   };
+
+  useEffect(() => {
+    getPositions();
+  }, []);
 
   return (
     <ContainerRegister>

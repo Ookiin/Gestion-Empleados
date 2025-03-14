@@ -9,13 +9,13 @@ import {
 } from "../../styles";
 import { forgotPassword } from "../services/authService";
 
-const ForgotPasswordModal = ({
+export default function ForgotPasswordModal({
   isOpen,
   onClose,
 }: {
   isOpen: boolean;
   onClose: () => void;
-}) => {
+}) {
   const [email, setEmail] = useState<string>("");
 
   const handleForgotPassword = async () => {
@@ -50,6 +50,4 @@ const ForgotPasswordModal = ({
       </ModalContentPassword>
     </ModalPassword>
   ) : null;
-};
-
-export default ForgotPasswordModal;
+}

@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { updateUser, fetchEmployees } from "../services/authService";
+import {
+  updateUser,
+  fetchEmployees,
+  fetchPositions,
+} from "../services/authService";
 import {
   DashboardContainer,
   Title,
@@ -11,11 +15,8 @@ import {
 import ActionButton from "../components/button";
 import EmployeeModal from "../components/modalEmployee";
 import { Employee } from "../utilities/interfaces";
-import axios from "axios";
 import Loader from "../components/loader";
 import Search from "../components/search";
-
-const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function AdminDashboard() {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -25,25 +26,10 @@ export default function AdminDashboard() {
   const [positions, setPositions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPositions = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/positions`);
-        setPositions(response.data.positions);
-      } catch (error) {
-        console.error("Error obteniendo posiciones:", error);
-      }
-    };
-
-    fetchPositions();
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetchEmployeesData(token);
-    }
-  }, []);
+  const getPositions = async () => {
+    const response = await fetchPositions();
+    setPositions(response.positions);
+  };
 
   const fetchEmployeesData = async (token: string) => {
     try {
@@ -89,6 +75,12 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchEmployeesData(token);
+    }
+    getPositions();
+
     const timeout = setTimeout(() => {
       setIsLoading(false);
     }, 2000);

@@ -9,7 +9,7 @@ import {
 } from "../../styles/index";
 import { resetPassword } from "../services/authService";
 
-const ResetPasswordPage = () => {
+export default function ResetPasswordPage() {
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -48,6 +48,4 @@ const ResetPasswordPage = () => {
       </ContainerReset>
     </div>
   );
-};
-
-export default ResetPasswordPage;
+}
