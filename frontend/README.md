@@ -16,6 +16,14 @@ Para iniciar el frontend se debe ejecutar el comando en consola
 npm run dev
 ```
 
+## Variables de entorno
+
+En la carpeta frontend se debe crear un archivo .env que incluira lo siguiente:
+
+```
+VITE_API_URL=http://localhost:(numero de puerto a eleccion: 3000, 5000, etc)/api
+```
+
 ## Estructura del Proyecto
 
 La estructura del proyecto frontend está organizada para mantener el código modular, limpio y fácilmente mantenible. Utilizamos TypeScript para los tipos estáticos y mejorar la seguridad del código, con React y Vite como herramientas principales.
