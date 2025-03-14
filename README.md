@@ -37,4 +37,4 @@ Solo el administrador puede crear empleados en la plataforma.
 
 Cuando el administrador registra un nuevo empleado, debe proporcionarle el correo y la contraseña generada para que el empleado pueda iniciar sesión.
 
-Los empleados solo pueden modificar su puesto de trabajo o eliminar su cuenta.
+Los empleados solo pueden modificar su puesto de trabajo o eliminar su cuenta, o en tal caso resetear la contraseña de ingreso a su perfil.
