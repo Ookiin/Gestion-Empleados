@@ -33,7 +33,8 @@ API_POSITIONS=<api_positions>
 
 ### Notas Importantes:
 
-````PORT: Este valor indica el puerto en el que la aplicación frontend se ejecutará. Si ya tienes otra aplicación utilizando ese puerto, puedes cambiarlo a otro disponible en tu máquina.
+```
+PORT: Este valor indica el puerto en el que la aplicación frontend se ejecutará. Si ya tienes otra aplicación utilizando ese puerto, puedes cambiarlo a otro disponible en tu máquina.
 
 MONGO_URI: Es la URI para conectar con tu base de datos en MongoDB Atlas. Si estás utilizando una base de datos local o diferente, ajusta esta URI.
 
@@ -43,7 +44,8 @@ EMAIL_USER y EMAIL_PASS: Son las credenciales de la cuenta de correo electrónic
 
 RESET_URL: La URL a la que se enviará el enlace de restablecimiento de contraseña.
 
-API_POSITIONS: URL de la API externa que contiene las posiciones de trabajo.```
+API_POSITIONS: URL de la API externa que contiene las posiciones de trabajo.
+```
 
 ## Introducción
 
@@ -131,7 +133,7 @@ router.post("/login", loginUser);
 router.post("/logout", protect, logoutUser);
 
 router.post("/forgot-password", protect, requestPasswordReset);
-````
+```
 
 ## Rutas (Endpoints)
 
