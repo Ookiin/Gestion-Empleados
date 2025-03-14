@@ -11,6 +11,14 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    resetToken: {
+      type: String,
+      default: null,
+    },
+    resetTokenExpiry: {
+      type: String,
+      default: null,
+    },
     role: {
       type: String,
       default: "employee",

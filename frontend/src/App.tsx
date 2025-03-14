@@ -7,6 +7,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import AdminLayout from "./layouts/adminLayout";
 import SearchResults from "./pages/SearchResults";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/employeeDashboard" element={<EmployeeDashboard />} />
         <Route path="/" element={<Home />} />
         <Route path="/searchResults" element={<SearchResults />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

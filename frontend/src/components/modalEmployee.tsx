@@ -41,7 +41,6 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
 
   const handleUpdate = () => {
     if (employee) {
-      console.log(employee._id, newFirstName, newPosition);
       onUpdate(employee._id, newFirstName, newPosition);
       onClose();
     }

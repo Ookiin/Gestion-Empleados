@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledButtonProps } from "../src/utilities/interfaces";
 
 // LOGIN STYLES ////////////////////////////////////////////
 
@@ -51,6 +52,7 @@ export const Button = styled.button`
   font-size: 1.1rem;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 20px;
   transition: background-color 0.3s ease;
   &:hover {
     background-color: #2c3e50;
@@ -215,11 +217,6 @@ export const CloseButton = styled.button`
 `;
 
 // LOGOUT BUTTON STYLES ///////////////////////////////////////////////////////////////////
-
-interface StyledButtonProps {
-  color: string;
-  $buttonText: string;
-}
 
 export const ButtonsContainer = styled.div`
   display: flex;
@@ -470,4 +467,125 @@ export const SearchButtonInput = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+// FORGET PASSWORD //////////////////////////////////////////
+
+export const ModalPassword = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContentPassword = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+export const ModalHeaderPassword = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
+export const InputPassword = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+
+  &:focus {
+    border-color: #0056b3;
+  }
+`;
+
+export const ModalFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const ButtonPassword = styled.button`
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #003f7f;
+  }
+
+  &:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+`;
+
+// RESET PASSWORD PAGE //////////////////////////////////////////////////////
+
+export const ContainerReset = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const TitleReset = styled.h2`
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
+export const StyledInput = styled(Input)`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+`;
+
+export const StyledButtonReset = styled(Button)`
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+export const Message = styled.p`
+  color: #d9534f;
+  font-size: 14px;
 `;

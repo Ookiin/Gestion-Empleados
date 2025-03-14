@@ -51,3 +51,8 @@ export interface SearchProps {
 export interface CardEmployeeProps {
   employee: Employee;
 }
+
+export interface StyledButtonProps {
+  color: string;
+  $buttonText: string;
+}

@@ -38,12 +38,41 @@ export const deleteEmployee = async (token: string, id: string) => {
   }
 };
 
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await axios.post(`${apiUrl}/auth/forgot-password`, {
+      email,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al enviar el enlace de recuperación:", error);
+    throw error;
+  }
+};
+
+export const resetPassword = async (token: string, newPassword: string) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}/auth/reset-password/${token}`,
+      { newPassword },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al restablecer la contraseña:", error);
+    throw error;
+  }
+};
+
 export const updateUser = async (
   token: string,
   id: string,
   updateData: { position?: string; firstName?: string }
 ) => {
-  console.log("ejecutando update");
   const url = `${apiUrl}/employees/${id}/update`;
   try {
     const response = await axios.put(url, updateData, {
