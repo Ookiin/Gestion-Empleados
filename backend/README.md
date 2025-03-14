@@ -16,6 +16,37 @@ Para iniciar el servidor se debe ejecutar el comando en consola
 npm start
 ```
 
+## Variables de entorno
+
+En la carpeta backend se debe crear un archivo .env que incluira lo siguiente:
+
+```
+PORT=5000
+MONGO_URI=<uri-mongoDB>
+JWT_SECRET=<clave_secreta>
+EMAIL_USER=<correo_de_envio>
+EMAIL_PASS=<contraseña_correo>
+RESET_URL=http://localhost:5173
+API_POSITIONS=<api_positions>
+
+```
+
+### Notas Importantes:
+
+```
+PORT: Este valor indica el puerto en el que la aplicación frontend se ejecutará. Si ya tienes otra aplicación utilizando ese puerto, puedes cambiarlo a otro disponible en tu máquina.
+
+MONGO_URI: Es la URI para conectar con tu base de datos en MongoDB Atlas. Si estás utilizando una base de datos local o diferente, ajusta esta URI.
+
+JWT_SECRET: Debes generar una clave secreta única para usarla en la autenticación de los usuarios con JWT.
+
+EMAIL_USER y EMAIL_PASS: Son las credenciales de la cuenta de correo electrónico que se usará para enviar correos, como para el restablecimiento de contraseñas.Con google la contraseña sera la contraseña de aplicacion otorgada por google.
+
+RESET_URL: La URL a la que se enviará el enlace de restablecimiento de contraseña.
+
+API_POSITIONS: URL de la API externa que contiene las posiciones de trabajo.
+```
+
 ## Introducción
 
 Este backend está diseñado para gestionar empleados, sus posiciones y usuarios asociados. Está basado en Node.js con Express y MongoDB como base de datos. Utiliza JWT para la autenticación y bcrypt para la encriptación de contraseñas. La API sigue el patrón RESTful y proporciona funcionalidades para CRUD (crear, leer, actualizar y eliminar) de empleados.
