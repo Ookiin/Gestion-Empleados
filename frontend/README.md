@@ -93,22 +93,12 @@ authService.tsx:
 Este archivo contiene las funciones que interactúan con la API backend. Incluye métodos para actualizar los datos del usuario, obtener la lista de empleados, etc.
 
 ```javascript
-export const updateUser = async (
-  token: string,
-  userId: string,
-  updateData: any
-) => {
-  const response = await fetch(`/api/employees/${userId}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updateData),
-  });
-
-  if (!response.ok) {
-    throw new Error("Error al actualizar usuario");
+export const fetchPositions = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/positions`);
+    return response.data;
+  } catch (error) {
+    console.error("Error obteniendo posiciones:", error);
   }
 };
 ```
