@@ -1,4 +1,4 @@
-import RoleRedirect from "../components/roleRedirect";
+import RoleRedirect from "../services/roleRedirect";
 
 export default function Home() {
   return (

@@ -38,13 +38,42 @@ export const deleteEmployee = async (token: string, id: string) => {
   }
 };
 
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await axios.post(`${apiUrl}/auth/forgot-password`, {
+      email,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al enviar el enlace de recuperación:", error);
+    throw error;
+  }
+};
+
+export const resetPassword = async (token: string, newPassword: string) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}/auth/reset-password/${token}`,
+      { newPassword },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al restablecer la contraseña:", error);
+    throw error;
+  }
+};
+
 export const updateUser = async (
   token: string,
   id: string,
   updateData: { position?: string; firstName?: string }
 ) => {
   const url = `${apiUrl}/employees/${id}/update`;
-
   try {
     const response = await axios.put(url, updateData, {
       headers: {
@@ -68,6 +97,18 @@ export const loginUser = async (email: string, password: string) => {
     password,
   });
   return response.data;
+};
+
+export const searchEmployees = async (name: string) => {
+  try {
+    const response = await axios.get(`${apiUrl}/employees/search`, {
+      params: { name },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al buscar empleados:", error);
+    throw error;
+  }
 };
 
 export const getToken = () => {

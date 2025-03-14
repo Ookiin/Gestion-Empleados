@@ -1,5 +1,21 @@
 # Documentación del Backend
 
+## Instalacion de dependencias
+
+Se debe instalar las dependencias ejecutando en consola el comando
+
+```javascript
+npm install
+```
+
+## Iniciacion de servidor
+
+Para iniciar el servidor se debe ejecutar el comando en consola
+
+```javascript
+npm start
+```
+
 ## Introducción
 
 Este backend está diseñado para gestionar empleados, sus posiciones y usuarios asociados. Está basado en Node.js con Express y MongoDB como base de datos. Utiliza JWT para la autenticación y bcrypt para la encriptación de contraseñas. La API sigue el patrón RESTful y proporciona funcionalidades para CRUD (crear, leer, actualizar y eliminar) de empleados.

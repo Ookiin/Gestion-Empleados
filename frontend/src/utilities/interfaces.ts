@@ -7,6 +7,13 @@ export interface Employee {
   lastName: string;
   position: string;
   birthDate: number;
+  email: string;
+}
+
+export interface User {
+  _id: string;
+  email: string;
+  role: "admin" | "employee";
 }
 
 export interface EmployeeModalProps {
@@ -35,4 +42,17 @@ export interface ButtonProps {
 export interface EmployeesContextType {
   employeesLength: number;
   setEmployeesLength: (length: number) => void;
+}
+
+export interface SearchProps {
+  onSearchResults: (results: Employee[]) => void;
+}
+
+export interface CardEmployeeProps {
+  employee: Employee;
+}
+
+export interface StyledButtonProps {
+  color: string;
+  $buttonText: string;
 }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledButtonProps } from "../src/utilities/interfaces";
 
 // LOGIN STYLES ////////////////////////////////////////////
 
@@ -7,7 +8,7 @@ export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  background-color: #242424;
   padding: 20px;
 `;
 
@@ -43,6 +44,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   width: 100%;
+  height: 50px;
   padding: 1rem;
   background-color: #4ca1af;
   border: none;
@@ -50,6 +52,7 @@ export const Button = styled.button`
   font-size: 1.1rem;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 20px;
   transition: background-color 0.3s ease;
   &:hover {
     background-color: #2c3e50;
@@ -64,6 +67,7 @@ export const DashboardContainer = styled.div`
   padding: 1rem;
   background-color: #f4f4f9;
   border-radius: 10px;
+  margin-top: 100px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
@@ -107,7 +111,19 @@ export const EmployeeInfo = styled.div`
   width: 100%;
 `;
 
-// Modal styles
+export const SearchContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #242424;
+`;
+
+// MODAL //////////////////////////////////////////////////////////////////////////
+
 export const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -202,10 +218,14 @@ export const CloseButton = styled.button`
 
 // LOGOUT BUTTON STYLES ///////////////////////////////////////////////////////////////////
 
-interface StyledButtonProps {
-  color: string;
-  $buttonText: string; // Cambia buttonText a $buttonText
-}
+export const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  height: 50%;
+  padding: 10px;
+`;
 
 export const StyledButton = styled.button<StyledButtonProps>`
   background-color: ${({ color }) => color};
@@ -300,4 +320,272 @@ export const ButtonRegister = styled.button`
   &:active {
     background-color: #2e6cb3;
   }
+`;
+
+// EMPLOYEE DASHBOARD ///////////////////////////////////////////////////////////////////
+
+export const DashboardContainerEmployee = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #242424;
+`;
+
+export const CardEmployee = styled.div`
+  background: white;
+  padding: 2rem;
+  color: black;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+`;
+
+export const EmployeeInfoEmployee = styled.div`
+  margin: 1rem 0;
+  text-align: left;
+  p {
+    margin: 0.5rem 0;
+  }
+`;
+
+export const SelectContainerEmployee = styled.div`
+  margin-top: 1rem;
+  text-align: left;
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+export const StyledSelectEmployee = styled.select`
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+`;
+
+export const StyledButtonEmployee = styled.button`
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  border: none;
+  outline: none;
+
+  &:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+// SEARCH //////////////////////////////////////////////////////////////////
+
+export const Container = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CardsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+  padding: 0 20px;
+`;
+
+export const CardWrapper = styled.div`
+  flex: 0 0 300px;
+  display: flex;
+  justify-content: center;
+`;
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+export const SearchButton = styled(Button)`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+`;
+
+export const SearchContainerInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+export const SearchInput = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  }
+`;
+
+export const SearchButtonInput = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+// FORGET PASSWORD //////////////////////////////////////////
+
+export const ModalPassword = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContentPassword = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+export const ModalHeaderPassword = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
+export const InputPassword = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+
+  &:focus {
+    border-color: #0056b3;
+  }
+`;
+
+export const ModalFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const ButtonPassword = styled.button`
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #003f7f;
+  }
+
+  &:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+`;
+
+// RESET PASSWORD PAGE //////////////////////////////////////////////////////
+
+export const ContainerReset = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const TitleReset = styled.h2`
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
+export const StyledInput = styled(Input)`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+`;
+
+export const StyledButtonReset = styled(Button)`
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+export const Message = styled.p`
+  color: #d9534f;
+  font-size: 14px;
 `;

@@ -85,25 +85,6 @@ export const logoutUser = (req, res) => {
   res.json({ message: "Logout exitoso, elimina el token en el cliente" });
 };
 
-export const resetPassword = async (req, res) => {
-  const { token, newPassword } = req.body;
-  const user = await User.findOne({
-    resetToken: token,
-    resetTokenExpiry: { $gt: Date.now() },
-  });
-
-  if (!user) {
-    return res.status(400).json({ message: "Token inválido o expirado" });
-  }
-
-  user.password = bcrypt.hashSync(newPassword, 10);
-  user.resetToken = null;
-  user.resetTokenExpiry = null;
-  await user.save();
-
-  res.json({ message: "Contraseña restablecida correctamente" });
-};
-
 export const requestPasswordReset = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -131,4 +112,32 @@ export const requestPasswordReset = async (req, res) => {
   });
 
   res.json({ message: "Email enviado. Revisa tu bandeja de entrada." });
+};
+
+export const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Token inválido o expirado" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    user.resetToken = undefined;
+    user.resetTokenExpiry = undefined;
+
+    await user.save();
+
+    res.json({ message: "Contraseña restablecida con éxito" });
+  } catch (error) {
+    console.error("Error en resetPassword:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
 };

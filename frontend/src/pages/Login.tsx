@@ -8,10 +8,13 @@ import {
   Input,
   Button,
 } from "../../styles/index.js";
+import ForgotPasswordModal from "./ForgetPassword.js";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -51,6 +54,14 @@ export default function Login() {
           />
           <Button type="submit">Iniciar Sesión</Button>
         </form>
+        <Button onClick={() => setIsModalOpen(true)}>
+          Olvidé mi contraseña
+        </Button>
+
+        <ForgotPasswordModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </FormWrapper>
     </LoginContainer>
   );

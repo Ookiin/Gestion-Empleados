@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/loader";
 
 export default function RoleRedirect() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function RoleRedirect() {
 
   return (
     <div>
-      <p>Redirigiendo...</p>
+      <Loader />
     </div>
   );
 }
