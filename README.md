@@ -27,9 +27,7 @@ Esta aplicación proporciona una solución integral para la administración de r
 
 La aplicación ya cuenta con un usuario administrador predefinido:
 
-Correo: admin@admin.com
-
-Contraseña: admin123
+Solicitarlo
 
 ### 🎯 Importante
 
