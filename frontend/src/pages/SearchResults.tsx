@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { Employee } from "../utilities/interfaces";
 import CardEmployee from "../components/cardEmployee";
 import EmployeeModal from "../components/modalEmployee";
-import axios from "axios";
-import { fetchEmployees, updateUser } from "../services/authService";
+import {
+  fetchEmployees,
+  fetchPositions,
+  updateUser,
+} from "../services/authService";
 import {
   ButtonContainer,
   CardsContainer,
@@ -12,8 +15,6 @@ import {
   Container,
   SearchButton,
 } from "../../styles";
-
-const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function SearchResults() {
   const location = useLocation();
@@ -25,18 +26,10 @@ export default function SearchResults() {
     null
   );
 
-  useEffect(() => {
-    const fetchPositions = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/positions`);
-        setPositions(response.data.positions);
-      } catch (error) {
-        console.error("Error obteniendo posiciones:", error);
-      }
-    };
-
-    fetchPositions();
-  }, []);
+  const getPositions = async () => {
+    const response = await fetchPositions();
+    setPositions(response.positions);
+  };
 
   const fetchEmployeesData = async (token: string) => {
     try {
@@ -46,13 +39,6 @@ export default function SearchResults() {
       console.error("Error al obtener empleados:", error);
     }
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetchEmployeesData(token);
-    }
-  }, []);
 
   const handleUpdateEmployee = async (
     employeeId: string,
@@ -84,6 +70,14 @@ export default function SearchResults() {
       }
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchEmployeesData(token);
+    }
+    getPositions();
+  }, []);
 
   return (
     <Container>

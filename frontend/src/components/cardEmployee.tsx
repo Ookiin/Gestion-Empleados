@@ -1,35 +1,21 @@
+import { Card } from "../../styles";
 import { CardEmployeeProps } from "../utilities/interfaces";
 
-const CardEmployee: React.FC<CardEmployeeProps> = ({ employee }) => {
+export default function CardEmployee({ employee }: CardEmployeeProps) {
+  const { firstName, lastName, position, email, birthDate } = employee;
   return (
-    <div style={styles.card}>
-      <h3>
-        {employee.firstName} {employee.lastName}
-      </h3>
+    <Card>
+      <h3>{`${firstName} ${lastName}`}</h3>
       <p>
-        <strong>Posición:</strong> {employee.position}
+        <strong>Posición:</strong> {position}
       </p>
       <p>
-        <strong>Email:</strong> {employee.email}
+        <strong>Email:</strong> {email}
       </p>
       <p>
         <strong>Fecha de Nacimiento:</strong>{" "}
-        {new Date(employee.birthDate).toLocaleDateString("es-ES")}
+        {new Date(birthDate).toLocaleDateString("es-ES")}
       </p>
-    </div>
+    </Card>
   );
-};
-
-const styles = {
-  card: {
-    border: "1px solid #ddd",
-    padding: "20px",
-    margin: "10px 0",
-    borderRadius: "8px",
-    color: "black",
-    backgroundColor: "#f4f4f9",
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-  },
-};
-
-export default CardEmployee;
+}

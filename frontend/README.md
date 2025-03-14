@@ -1,184 +1,70 @@
+# Documentación del Frontend
+
+## Instalacion de dependencias
+
+Se debe instalar las dependencias ejecutando en consola el comando
+
+```javascript
+npm install
+```
+
+## Iniciacion de frontend
+
+Para iniciar el frontend se debe ejecutar el comando en consola
+
+```javascript
+npm run dev
+```
+
 ## Estructura del Proyecto
 
 La estructura del proyecto frontend está organizada para mantener el código modular, limpio y fácilmente mantenible. Utilizamos TypeScript para los tipos estáticos y mejorar la seguridad del código, con React y Vite como herramientas principales.
 
+## 🚀 Tecnologías Utilizadas
+
+- ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) **TypeScript**: Lenguaje de programación que extiende JavaScript añadiendo tipos estáticos.
+- ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) **JavaScript**: Lenguaje de programación utilizado para la lógica del frontend.
+- ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) **React**: Biblioteca para construir interfaces de usuario.
+- ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white) **Vite**: Herramienta de desarrollo rápida para proyectos de frontend.
+- ![Styled Components](https://img.shields.io/badge/Styled--Components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) **Styled Components**: Librería para escribir estilos CSS en JavaScript.
+- ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white) **ESLint**: Herramienta para identificar y reportar patrones encontrados en el código ECMAScript/JavaScript.
+- ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black) **Prettier**: Formateador de código para mantener un estilo consistente.
+
 # Estructura de Carpetas
 
-    src/
-    ├── components/
-    │ ├── EmployeeModal/
-    │ ├── Header/
-    │ ├── Sidebar/
-    │ └── ...
-    ├── pages/
-    │ ├── Home/
-    │ ├── Login/
-    │ ├── Dashboard/
-    │ └── ...
-    ├── services/
-    │ ├── api.ts
-    │ └── auth.ts
-    ├── styles/
-    │ ├── index.ts
-    │ └── ...
-    └── utilities/
-    ├── interfaces.ts
-    └── helpers.ts
+La estructura del proyecto frontend está organizada de la siguiente manera:
 
-# Componentes Principales
-
-1. EmployeeModal:
-   Este componente permite la visualización y edición de la información de los empleados. Dependiendo del rol del usuario logueado, el modal habilitará o deshabilitará la opción de editar los datos.
-
-# Funcionalidad:
-
-Permite mostrar la información del empleado (nombre, puesto, email, fecha de nacimiento).
-Si el usuario logueado tiene el rol de "admin", podrá editar el nombre y puesto.
-El botón de "Actualizar" solo es visible si el rol del usuario es "admin".
-Props:
-
-isOpen: Booleano que indica si el modal está abierto o cerrado.
-employee: Objeto del empleado cuyo perfil se quiere editar.
-positions: Array de posiciones disponibles para asignar al empleado.
-onUpdate: Función que maneja la actualización de los datos del empleado.
-onClose: Función que maneja el cierre del modal.
-Lógica de actualización:
-
-Se verifica el rol del usuario logueado (guardado en el localStorage).
-Si el rol es "admin", el modal permite editar el nombre y puesto del empleado.
-El modal se cierra una vez que el admin realiza la actualización.
-
-```javascript
-const EmployeeModal: React.FC<EmployeeModalProps> = ({
-  isOpen,
-  employee,
-  positions,
-  onUpdate,
-  onClose,
-}) => {
-  const [newFirstName, setNewFirstName] = useState < string > "";
-  const [newPosition, setNewPosition] = useState < string > "";
-
-  const userRole = JSON.parse(localStorage.getItem("user") || "{}").role;
-
-  useEffect(() => {
-    if (employee) {
-      setNewFirstName(employee.firstName);
-      setNewPosition(employee.position);
-    }
-  }, [employee]);
-
-  const handleUpdate = () => {
-    if (employee) {
-      console.log(employee._id, newFirstName, newPosition);
-      onUpdate(employee._id, newFirstName, newPosition);
-      onClose();
-    }
-  };
-
-  if (!isOpen || !employee) return null;
-
-  return (
-    <Modal>
-      <ModalContent>
-        <CloseButton onClick={onClose}>×</CloseButton>
-        <ModalHeader>Editar Empleado</ModalHeader>
-        <ModalInput
-          type="text"
-          value={newFirstName}
-          onChange={(e) => setNewFirstName(e.target.value)}
-          placeholder="Nuevo nombre"
-        />
-        <ModalInput
-          type="text"
-          value={employee.lastName}
-          readOnly
-          placeholder="Apellido"
-        />
-        <ModalInput
-          type="text"
-          value={employee.email}
-          readOnly
-          placeholder="Email"
-        />
-        <ModalInput
-          type="text"
-          value={new Date(employee.birthDate).toLocaleDateString("es-ES")}
-          readOnly
-          placeholder="Fecha de nacimiento"
-        />
-        <ModalSelect
-          value={newPosition}
-          onChange={(e) => setNewPosition(e.target.value)}
-        >
-          <option value="">Seleccione una posición</option>
-          {positions.map((position, index) => (
-            <option key={index} value={position}>
-              {position}
-            </option>
-          ))}
-        </ModalSelect>
-        {userRole === "admin" && (
-          <Button onClick={handleUpdate}>Actualizar</Button>
-        )}
-      </ModalContent>
-    </Modal>
-  );
-};
 ```
-
-2. SearchResults:
-   Este componente muestra la lista de empleados y permite abrir el EmployeeModal para editar los datos de un empleado.
-
-# Funcionalidad:
-
-Muestra una lista de empleados.
-Al hacer clic sobre un empleado, abre el modal con la opción de editar la información (solo si el rol es admin).
-
-```javascript
-const SearchResults: React.FC<SearchResultsProps> = ({
-  employees,
-  positions,
-}) => {
-  const [selectedEmployee, setSelectedEmployee] =
-    (useState < Employee) | (null > null);
-  const [isModalOpen, setIsModalOpen] = useState < boolean > false;
-
-  const handleEmployeeClick = (employee: Employee) => {
-    setSelectedEmployee(employee);
-    setIsModalOpen(true);
-  };
-
-  const handleUpdateEmployee = (
-    employeeId: string,
-    newFirstName: string,
-    newPosition: string
-  ) => {
-    // Lógica para manejar la actualización del empleado.
-  };
-
-  return (
-    <div>
-      <ul>
-        {employees.map((employee) => (
-          <li key={employee._id} onClick={() => handleEmployeeClick(employee)}>
-            {employee.firstName} - {employee.position}
-          </li>
-        ))}
-      </ul>
-
-      {selectedEmployee && (
-        <EmployeeModal
-          isOpen={isModalOpen}
-          employee={selectedEmployee}
-          positions={positions}
-          onUpdate={handleUpdateEmployee}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
-    </div>
-  );
-};
+src/
+├── components/
+│   ├── button.tsx
+│   ├── cardEmployee.tsx
+│   ├── loader.tsx
+│   ├── modalEmployee.tsx
+│   └── search.tsx
+├── layouts/
+│   └── adminLayout.tsx
+├── pages/
+│   ├── AdminDashboard.tsx
+│   ├── EmployeeDashboard.tsx
+│   ├── ForgetPassword.tsx
+│   ├── Home.tsx
+│   ├── Login.tsx
+│   ├── RegisterEmployee.tsx
+│   ├── ResetPassword.tsx
+│   └── SearchResults.tsx
+├── services/
+│   ├── authService.tsx
+│   └── roleRedirect.tsx
+├── styles/
+│   ├── index.ts
+│   └── loader.css
+├── utilities/
+│   └── interfaces.ts
+├── App.tsx
+├── main.tsx
+├── index.css
+└── index.html
 ```
 
 # Lógica de Autenticación
@@ -192,7 +78,7 @@ Al acceder a los diferentes componentes (como el modal), la aplicación revisa e
 Ejemplo:
 
 ```javascript
-const userRole = JSON.parse(localStorage.getItem("user") || "{}").role;
+const userRole = JSON.parse(localStorage.getItem("role") || "{}").role;
 
 if (userRole === "admin") {
   // Mostrar opciones de edición
@@ -203,56 +89,58 @@ if (userRole === "admin") {
 
 # Servicios
 
-api.ts:
+authService.tsx:
 Este archivo contiene las funciones que interactúan con la API backend. Incluye métodos para actualizar los datos del usuario, obtener la lista de empleados, etc.
 
-```javascript
-export const updateUser = async (
-  token: string,
-  userId: string,
-  updateData: any
-) => {
-  const response = await fetch(`/api/employees/${userId}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updateData),
-  });
+Ejemplo:
 
-  if (!response.ok) {
-    throw new Error("Error al actualizar usuario");
+```javascript
+export const fetchPositions = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/positions`);
+    return response.data;
+  } catch (error) {
+    console.error("Error obteniendo posiciones:", error);
   }
 };
 ```
 
-auth.ts:
-Este archivo contiene la lógica para autenticar a los usuarios, manejar el login y almacenar el token de acceso en el localStorage.
-
 # Estilos
 
-Los estilos se gestionan mediante un archivo de estilos centralizados para asegurar que los componentes mantengan una apariencia consistente. Los estilos están definidos en el archivo index.ts dentro de la carpeta styles.
+Los estilos se gestionan mediante un archivo de estilos centralizados para asegurar que los componentes mantengan una apariencia consistente. Los estilos están definidos en el archivo index.ts dentro de la carpeta styles. Ademas reciben props que afectan segun el caso un cambio de estilo haciendo cada componente modulable y reutilizable
 
-Ejemplo de un botón estilizado:
+Ejemplo de un botón estilizado utilizando una prop del texto del boton "Eliminar empleado":
 
 ```javascript
-export const Button = styled.button`
-  background-color: #4caf50;
+export const StyledButton =
+  styled.button <
+  StyledButtonProps >
+  `
+  background-color: ${({ color }) => color};
   color: white;
-  border: none;
-  padding: 10px 20px;
+  font-weight: 600;
+  padding: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "0.5rem 1rem" : "1rem"};
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  width: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "auto" : "50%"};
+  margin-left: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "10px" : "0"};
+  align-self: ${({ $buttonText }) =>
+    $buttonText === "Eliminar empleado" ? "center" : "stretch"};
 
   &:hover {
-    background-color: #45a049;
+    background-color: ${({ color }) => color};
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
 ```
 
 ### Conclusión
 
-El frontend está diseñado para ser modular, con componentes reutilizables como el EmployeeModal y SearchResults. La lógica de autorización se maneja utilizando el rol del usuario almacenado en localStorage, asegurando que solo los administradores puedan editar la información de los empleados. La autenticación y el acceso se gestionan adecuadamente, con todos los datos del usuario y el token siendo guardados y utilizados según sea necesario para las operaciones de la aplicación.
+El frontend está diseñado para ser modular, con componentes reutilizables como el EmployeeModal, SearchResults, ActionButton, etc. La lógica de autorización se maneja utilizando el rol del usuario almacenado en localStorage, asegurando que solo los administradores puedan editar la información de los empleados. La autenticación y el acceso se gestionan adecuadamente, con todos los datos del usuario y el token siendo guardados y utilizados según sea necesario para las operaciones de la aplicación.
 
 # React + TypeScript + Vite
 

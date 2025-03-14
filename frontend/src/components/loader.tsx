@@ -1,19 +1,9 @@
+import { LoaderContainer } from "../../styles";
 import "../../styles/loader.css";
-const Loader = () => {
+export default function Loader() {
   return (
-    <div style={styles.loader}>
+    <LoaderContainer>
       <div className="spinner"></div>
-    </div>
+    </LoaderContainer>
   );
-};
-
-const styles = {
-  loader: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  },
-};
-
-export default Loader;
+}

@@ -111,6 +111,15 @@ export const searchEmployees = async (name: string) => {
   }
 };
 
+export const fetchPositions = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/positions`);
+    return response.data;
+  } catch (error) {
+    console.error("Error obteniendo posiciones:", error);
+  }
+};
+
 export const getToken = () => {
   return localStorage.getItem("token");
 };

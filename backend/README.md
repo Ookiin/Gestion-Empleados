@@ -34,25 +34,26 @@ Este backend está diseñado para gestionar empleados, sus posiciones y usuarios
 
         backend/
         ├── config/
-        │ └── db.js
+        │   └── db.js
         │
         ├── controllers/
-        | ├── authController.js
-        | └── employeeController.js
+        |   ├── authController.js
+        |   └── employeeController.js
         │
         ├── middleware/
-        │ └── authMiddleware.js
+        │   └── authMiddleware.js
         │
         ├── models/
-        │ ├── Employee.js
-        │ ├── User.js
+        │   ├── Employee.js
+        │   └── User.js
         │
         ├── routes/
-        │ ├── authRoutes.js
-        │ ├── employeeRoutes.js
+        │   ├── authRoutes.js
+        │   ├── employeeRoutes.js
+        │   └── positionsRoutes.js
         │
         ├── utils/
-        │ ├── generateToken.js
+        │   └── generateToken.js
         │
         └── server.js
 
@@ -63,27 +64,21 @@ Este backend está diseñado para gestionar empleados, sus posiciones y usuarios
     controllers/: Almacena la lógica de controladores para manejar las solicitudes HTTP.
 
         ├── authController.js: Controlador encargado de la autenticación y generación de tokens JWT.
-
         └── employeeController.js: Controlador que maneja la lógica de los empleados.
 
     middleware/: Contiene middlewares que se ejecutan antes de las solicitudes para protección y validaciones.
-
         └── authMiddleware.js: Middleware que protege rutas verificando el token JWT.
 
     models/: Define los esquemas de la base de datos usando Mongoose.
-
         ├── Employee.js: Modelo de empleados.
-
         └── User.js: Modelo de usuarios.
 
     routes/: Contiene los archivos donde se definen las rutas de la API.
-
         ├── authRoutes.js: Rutas relacionadas con la autenticación de usuarios.
-
-        └── employeeRoutes.js: Rutas para la gestión de empleados.
+        ├── employeeRoutes.js: Rutas para la gestión de empleados.
+        └── positionsRoutes.js: Rutas para la obtencion de las posiciones de la API.
 
     utils/: Funciones auxiliares reutilizables.
-
         └── generateToken.js: Función para generar tokens JWT para autenticación.
 
     server.js: Archivo principal que inicia el servidor Express y configura la API.
@@ -121,7 +116,7 @@ Descripción: Permite a los usuarios iniciar sesión proporcionando sus credenci
 
 Descripción: Obtiene la lista de todos los empleados registrados en el sistema. Requiere autenticación.
 
-3. GET /api/employees/:id
+3. GET /api/employees/search?name=${nombre o apellido de empleado}
    Método: GET
 
 Descripción: Obtiene la información de un empleado específico utilizando su ID. Requiere autenticación.
@@ -131,10 +126,35 @@ Descripción: Obtiene la información de un empleado específico utilizando su I
 
 Descripción: Actualiza la información de un empleado (por ejemplo, su puesto de trabajo). Requiere autenticación.
 
-5. DELETE /api/employees/:id/delete
+5. DELETE /api/employees/:id
    Método: DELETE
 
 Descripción: Elimina un empleado del sistema. Requiere autenticación.
+
+6. POST /api/auth/register
+   Método: POST
+
+Descripción: Permite crear un usuario admin proporcionando la información necesaria. La información del admin se guarda en la base de datos como usuario pero no como empleado.
+
+7. POST /api/auth/logout
+   Método: POST
+
+Descripción: Permite a los usuarios cerrar sesión. Requiere autenticación.
+
+8. POST /api/auth/forgot-password
+   Método: POST
+
+Descripción: Permite a los usuarios solicitar un restablecimiento de contraseña. Se envía un correo electrónico con un enlace para restablecer la contraseña.
+
+9. POST /api/auth/reset-password/:token
+   Método: POST
+
+Descripción: Permite a los usuarios restablecer su contraseña utilizando un token proporcionado en el enlace de restablecimiento de contraseña.
+
+10. POST /api/auth/createEmployee
+    Método: POST
+
+Descripción: Permite crear al admin un empleado proporcionando la información necesaria. La información del empleado se guarda en la base de datos como usuario y como empleado, separando la informacion sensible de seguridad como contraseña, tokens, de la informativa.
 
 # Conclusión
 
